@@ -2,11 +2,22 @@ package co.edu.unbosque.model.persistence;
 
 import java.util.ArrayList;
 
-public interface CRUDOperation<E,D> {
-	public void crear(D nuevoDato); 
-	public void eliminar(D nuevoDato);
-	public void eliminar(int posicionE);
-	public void actualizar(int posicionA, D nuevoDato);
-	public ArrayList<D> buscarTodo();
-	public D buscarUno(int posicionB);
+public interface CRUDOperation<D, E> {
+	
+
+	public void delete(int positionToDelete);
+	
+	public String showAll(); 
+
+	public ArrayList<D> getAll(); 
+
+	public boolean add(D newData);  
+
+	public E find(E toFind); 
+
+	public E find2(E toFind); 
+
+	public boolean update(D previous, D newData); 
+	
+	public boolean delete(D toDelete); 
 }
