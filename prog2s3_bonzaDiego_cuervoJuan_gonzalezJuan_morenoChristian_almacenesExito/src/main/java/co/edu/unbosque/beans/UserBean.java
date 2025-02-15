@@ -1,5 +1,7 @@
 package co.edu.unbosque.beans;
 
+import java.util.ArrayList;
+
 import co.edu.unbosque.model.UsuarioDTO;
 import co.edu.unbosque.model.persistence.UsuarioDAO;
 
@@ -44,7 +46,14 @@ public class UserBean {
 
 	public void guardar() {
 		uDao.add(new UsuarioDTO(nombreUsuario, contrasegna));
-		
+
+	}
+
+	public void mostrar() {
+		ArrayList<UsuarioDTO> u = uDao.getAll();
+		for (UsuarioDTO usuarioDTO : u) {
+			System.out.println(usuarioDTO);
+		}
 	}
 
 }
