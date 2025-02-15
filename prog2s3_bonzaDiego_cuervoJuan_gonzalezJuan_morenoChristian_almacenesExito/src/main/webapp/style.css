@@ -1,0 +1,107 @@
+@charset "UTF-8";
+
+body {
+	background-color: #FFE701;
+}
+
+h1 {
+	color: white;
+}
+
+.div-logIn {
+	place-items: center;
+}
+
+.cuadroForm {
+	width: 400px;
+	height: 460px;
+	background: black;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	margin: 10%;
+	border-radius: 21px;
+	background: #FFE701;
+	box-shadow: -5px 5px 100px #d9c401, 5px -5px 100px #ffff01;
+}
+
+.boton-ingresar {
+	background: #e8e8e8 !important;
+	border: none !important;
+	padding: 10px 25px !important;
+	border-radius: 15px !important;
+}
+
+.boton-ingresar {
+	padding: 0px 25px;
+	border: unset;
+	border-radius: 15px;
+	color: #212121 !important;
+	z-index: 1;
+	position: relative;
+	background: #e8e8e8;
+	font-weight: 1000;
+	font-size: 17px;
+	-webkit-box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+	box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+	transition: all 250ms;
+	overflow: hidden;
+}
+
+.boton-ingresar::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 0;
+	border-radius: 15px;
+	background-color: #212121 ;
+	z-index: -1;
+	-webkit-box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+	box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+	transition: all 250ms;
+}
+
+.boton-ingresar:hover {
+	color: #e8e8e8 !important;
+}
+
+.boton-ingresar:hover::before {
+	width: 100%;
+}
+
+.cuadroForm label {
+	font-weight: bold;
+	width: 120px;
+	text-align: right;
+	display: block;
+	margin-bottom: 10px;
+}
+
+.cuadroForm input {
+	width: 100%;
+	padding: 5px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	display: block;
+	margin-bottom: 10px;
+}
+
+.password-container {
+	position: relative;
+	display: flex;
+	align-items: center;
+	width: max-content;
+}
+
+.password-input {
+	padding-left: 30px; /* Espacio para el ícono */
+}
+
+.password-input .ui-password-toggle {
+	position: absolute;
+	left: 5px; /* Alinea el botón en el centro izquierdo */
+	top: 50%;
+	transform: translateY(-50%);
+}
