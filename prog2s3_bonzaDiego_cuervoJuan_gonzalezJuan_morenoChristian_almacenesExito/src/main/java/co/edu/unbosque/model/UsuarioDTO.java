@@ -1,10 +1,7 @@
 package co.edu.unbosque.model;
 
-import java.io.Serializable;
+public class UsuarioDTO {
 
-public class UsuarioDTO implements Serializable {
-
-	private static final long serialVersionUID = 1L;
 	private String nombreUsuario;
 	private String contrasegna;
 
@@ -32,6 +29,11 @@ public class UsuarioDTO implements Serializable {
 
 	public void setContrasegna(String contrasegna) {
 		this.contrasegna = contrasegna;
+	}
+
+	@Override
+	public String toString() {
+		return "UsuarioDTO [nombreUsuario=" + nombreUsuario + ", contrasegna=" + contrasegna + "]";
 	}
 
 }
