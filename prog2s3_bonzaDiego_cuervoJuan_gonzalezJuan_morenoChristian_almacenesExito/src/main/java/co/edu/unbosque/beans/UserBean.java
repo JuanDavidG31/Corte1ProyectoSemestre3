@@ -44,8 +44,7 @@ public class UserBean {
 		this.contrasegna = "";
 	}
 
-	public void guardar() {
-		uDao.add(new UsuarioDTO(nombreUsuario, contrasegna));
+	public void crear() {
 
 	}
 
