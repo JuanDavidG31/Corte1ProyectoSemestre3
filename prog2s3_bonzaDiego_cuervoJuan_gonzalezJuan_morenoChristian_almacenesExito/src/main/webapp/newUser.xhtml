@@ -94,11 +94,11 @@
 							<f:selectItem itemLabel="Seleccione un cargo" itemValue="" />
 							<f:selectItems value="#{UserBean.cargo}" />
 						</p:selectOneMenu>
-					</span>SS
+					</span>
 				</div>
 
 				<div class="field botones-container">
-					<p:commandButton action="#{UserBean.}" update="@form" value="Guardar"
+					<p:commandButton action="#{UserBean.crear}" value="Guardar"
 						styleClass="boton-crear" />
 					<p:commandButton value="Inicio" icon="fa fa-home"
 						styleClass="boton-home" action="index.xhtml?faces-redirect=true"
