@@ -23,12 +23,78 @@
 		crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="userStyle.css" />
 	<script src="script.js"></script>
-	<link rel="icon" type="image/png" href="favicon.ico" />
+	<link rel="icon" type="image/png" href="iconopag.ico" />
 
 </h:head>
+
 <h:body>
-<div id="box-formulario">
-</div>
+	<div id="box-formulario">
+		<div class="card">
+			<h:form>
+				<p:messages>
+					<p:autoUpdate />
+				</p:messages>
+
+				<h2 style="text-align: center; margin-bottom: 20px;">Crear
+					Usuario</h2>
+
+				<div class="field" style="margin-bottom: 20px;">
+					<span class="ui-float-label"> <p:inputText id="name"
+							required="true" style="width: 100%;" /> <p:outputLabel
+							for="name" value="Nombre" />
+					</span>
+				</div>
+
+				<div class="field" style="margin-bottom: 20px;">
+					<span class="ui-float-label"> <p:inputText id="apellido"
+							required="true" style="width: 100%;" /> <p:outputLabel
+							for="apellido" value="Apellido" />
+					</span>
+				</div>
+
+				<div class="field" style="margin-bottom: 20px;">
+					<span class="ui-float-label"> <p:inputText id="email"
+							required="true" style="width: 100%;" /> <p:outputLabel
+							for="email" value="Correo Electrónico" />
+					</span>
+				</div>
+
+				<div class="field" style="margin-bottom: 20px;">
+					<span class="ui-float-label"> <p:password id="pwd1"
+							match="pwd2" required="true" style="width: 100%;" /> <p:outputLabel
+							for="pwd1" value="Contraseña" />
+					</span>
+				</div>
+
+				<div class="field" style="margin-bottom: 20px;">
+					<span class="ui-float-label"> <p:password id="pwd2"
+							required="true" style="width: 100%;" /> <p:outputLabel
+							for="pwd2" value="Confirmar Contraseña" />
+					</span>
+				</div>
+
+				<div class="field" style="margin-bottom: 20px;">
+					<span> <p:selectOneMenu id="lazy" dynamic="true"
+							style="width: 100%;">
+							<f:selectItem itemLabel="Seleccione un cargo" itemValue="" />
+							<f:selectItems value="#{selectOneMenuView.options}" />
+						</p:selectOneMenu>
+					</span>
+				</div>
+
+				<div class="field botones-container">
+					<p:commandButton update="@form" value="Guardar"
+						styleClass="boton-crear" />
+					<p:commandButton value="Inicio" icon="fa fa-home"
+						styleClass="boton-home" action="index.xhtml?faces-redirect=true"
+						immediate="true" />
+
+
+				</div>
+
+			</h:form>
+		</div>
+	</div>
 
 </h:body>
 </html>

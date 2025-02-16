@@ -1,10 +1,124 @@
 @charset "UTF-8";
 
 #box-formulario {
-	margin: 570px;
-	margin-top: 90px;
+	margin: 90px auto;
 	width: 400px;
-	height: 600px;
+	height: auto;
 	border-radius: 21px;
-	background-color: red;
+	padding: 20px;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+}
+
+.card {
+	width: 100%;
+	background: #FFE701;
+	padding: 20px;
+	border-radius: 10px;
+}
+
+.form-group {
+	display: flex;
+	flex-direction: column;
+	margin-bottom: 15px;
+}
+
+.form-group h:outputLabel {
+	margin-bottom: 5px;
+	font-weight: bold;
+}
+
+.button-container {
+	text-align: center;
+	margin-top: 10px;
+}
+
+/* Contenedor de los botones */
+.botones-container {
+	display: flex;
+	justify-content: space-between;
+	gap: 10px;
+	width: 100%;
+}
+
+/* Estilos base para ambos botones */
+.boton-crear, .boton-home {
+	background: #e8e8e8 !important;
+	height: 50px;
+	
+	border-radius: 15px !important;
+	color: #212121 !important;
+	font-weight: bold;
+	font-size: 16px;
+	box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
+	transition: all 250ms ease-in-out;
+	position: relative;
+	overflow: hidden;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	cursor: pointer;
+}
+
+/* Animación al pasar el mouse */
+.boton-crear::before, .boton-home::before {
+	content: "";
+	position: absolute;
+	top: 0;
+	left: 0;
+	height: 100%;
+	width: 0; /* Comienza sin ancho */
+	border-radius: 15px;
+	z-index: -1;
+	transition: width 250ms ease-in-out;
+}
+
+/* Botón Guardar (70%) */
+.boton-crear {
+	flex: 7;
+	padding: 15px;
+	background: #e8e8e8;
+}
+
+.boton-crear::before {
+	background-color: #212121;
+}
+
+.boton-crear:hover {
+	color: #e8e8e8 !important;
+}
+
+.boton-crear:hover::before {
+	width: 100%;
+}
+
+/* Botón Inicio (30%) */
+.boton-home {
+	flex: 3;
+	padding: 15px;
+	background: #e8e8e8;
+}
+
+.boton-home::before {
+	background-color: #212121;
+}
+
+.boton-home:hover {
+	color: #e8e8e8 !important;
+}
+
+.boton-home:hover::before {
+	width: 100%;
+}
+
+/* Icono dentro del botón */
+.boton-home i {
+	font-size: 20px;
+	margin-right: 5px;
+}
+
+/* Para evitar que los botones cambien de tamaño al pasar el mouse */
+.boton-crear:hover, .boton-home:hover {
+	transform: scale(1.03);
 }
