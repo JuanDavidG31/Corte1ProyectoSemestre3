@@ -84,8 +84,12 @@ public class UsuarioDAO implements CRUDOperation<UsuarioDTO, Usuario> {
 	public void writeFile() {
 		String content = "";
 		for (Usuario m : listaUsuario) {
-			content += m.getNombreUsuario() + ";";
+			content += m.getId() + ";";
 			content += m.getContrasegna() + ";";
+			content += m.getNombre() + ";";
+			content += m.getApellido() + ";";
+			content += m.getCorreo() + ";";
+			content += m.getCargo() + ";";
 			content += "\n";
 		}
 		FileHandler.writeFile(FILE_NAME, content);
@@ -102,8 +106,13 @@ public class UsuarioDAO implements CRUDOperation<UsuarioDTO, Usuario> {
 			for (String row : rows) {
 				String[] cols = row.split(";");
 				Usuario tempo = new Usuario();
-				tempo.setNombreUsuario(cols[0]);
+				int id = Integer.parseInt(cols[0]);
+				tempo.setId(id);
 				tempo.setContrasegna(cols[1]);
+				tempo.setNombre(cols[2]);
+				tempo.setApellido(cols[3]);
+				tempo.setCorreo(cols[4]);
+				tempo.setCargo(cols[5]);
 				listaUsuario.add(tempo);
 			}
 		}
@@ -123,18 +132,16 @@ public class UsuarioDAO implements CRUDOperation<UsuarioDTO, Usuario> {
 		}
 	}
 
-	
-
 	@Override
 	public Usuario find(Usuario toFind) {
 		Usuario found = null;
 		if (!listaUsuario.isEmpty()) {
 			for (Usuario Usuario : listaUsuario) {
-				if (Usuario.getNombreUsuario().equals(toFind.getNombreUsuario())) {
+				if (Usuario.getId() == toFind.getId()) {
 					found = Usuario;
 					return found;
 				} else {
-					continue;  
+					continue;
 				}
 			}
 		} else {
