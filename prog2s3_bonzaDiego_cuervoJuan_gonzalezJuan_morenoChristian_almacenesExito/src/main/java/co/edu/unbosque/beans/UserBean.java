@@ -14,20 +14,25 @@ import jakarta.inject.Named;
 
 public class UserBean {
 
-	private String nombreUsuario;
+	private int id;
 	private String contrasegna;
+	private String contrasegna2;
+	private String nombre;
+	private String apellido;
+	private String correo;
+	private String cargo;
 	private UsuarioDAO uDao;
 
 	public UserBean() {
 		uDao = new UsuarioDAO();
 	}
 
-	public String getNombreUsuario() {
-		return nombreUsuario;
+	public int getId() {
+		return id;
 	}
 
-	public void setNombreUsuario(String nombreUsuario) {
-		this.nombreUsuario = nombreUsuario;
+	public void setId(int id) {
+		this.id = id;
 	}
 
 	public String getContrasegna() {
@@ -38,13 +43,49 @@ public class UserBean {
 		this.contrasegna = contrasegna;
 	}
 
-	public void eliminar() {
+	public String getNombre() {
+		return nombre;
+	}
 
-		this.nombreUsuario = "";
-		this.contrasegna = "";
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
+
+	public String getApellido() {
+		return apellido;
+	}
+
+	public void setApellido(String apellido) {
+		this.apellido = apellido;
+	}
+
+	public String getCorreo() {
+		return correo;
+	}
+
+	public void setCorreo(String correo) {
+		this.correo = correo;
+	}
+
+	public String getCargo() {
+		return cargo;
+	}
+
+	public void setCargo(String cargo) {
+		this.cargo = cargo;
+	}
+
+	public String getContrasegna2() {
+		return contrasegna2;
+	}
+
+	public void setContrasegna2(String contrasegna2) {
+		this.contrasegna2 = contrasegna2;
 	}
 
 	public void crear() {
+
+		
 
 	}
 
