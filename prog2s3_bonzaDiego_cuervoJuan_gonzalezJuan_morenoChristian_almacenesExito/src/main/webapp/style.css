@@ -1,22 +1,28 @@
 @charset "UTF-8";
 
 body {
+	 margin: 0;
+    height: 100vh;
 	background-image: url("FondoFruver.jpeg");
-	background-position: center center;
-	overflow: hidden;
+	background-size: cover;
+	background-position: center;
 	background-repeat: no-repeat;
 }
 
 #box-formulario {
-	margin: 570px;
-	margin-top: 150px;
+	margin: auto !important;
+	margin-top: inherit !important;
 	width: 400px;
 	height: 300px;
 	border-radius: 21px;
 	display: flex;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
 }
 
-#nuevo-usuario{
+#nuevo-usuario {
 	padding: 15px;
 }
 
@@ -32,18 +38,15 @@ body {
 }
 
 .boton-ingresar {
-	
 	background: #e8e8e8 !important;
 	border: none !important;
 	padding: 10px 25px !important;
 	border-radius: 15px !important;
-
 	padding: 0px 25px;
 	border: unset;
 	border-radius: 15px;
 	color: #212121 !important;
 	z-index: 1;
-
 	background: #e8e8e8;
 	font-weight: 1000;
 	font-size: 17px;
@@ -94,16 +97,16 @@ body {
 }
 
 .password-container {
-    position: relative;
-    display: flex;
-    align-items: center;
-    width: max-content;
+	position: relative;
+	display: flex;
+	align-items: center;
+	width: max-content;
 }
 
 .password-input .ui-password-toggle {
-    position: absolute;
-    right: 10px; 
-    top: 50%;
-    transform: translateY(-50%); 
-    cursor: pointer;
+	position: absolute;
+	right: 10px;
+	top: 50%;
+	transform: translateY(-50%);
+	cursor: pointer;
 }
