@@ -51,6 +51,17 @@
 							for="apellido" value="Apellido" />
 					</span>
 				</div>
+				<div class="field" style="margin-bottom: 20px;">
+					<span class="ui-float-label"> <p:inputText
+							id="identificacion"
+							required="true" style="width: 100%;"
+							validatorMessage="Ingrese un número de identificación válido">
+							<f:validateRegex pattern="^\d{6,12}$" />
+						</p:inputText> <p:outputLabel for="identificacion"
+							value="Número de Identificación" />
+					</span>
+				</div>
+
 
 				<div class="field" style="margin-bottom: 20px;">
 					<span class="ui-float-label"> <p:inputText id="email"
