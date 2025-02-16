@@ -24,41 +24,53 @@
 	<link rel="stylesheet" href="style.css"></link>
 	<script src="https://kit.fontawesome.com/e5507d7bda.js"
 		crossorigin="anonymous"></script>
+	<script src="https://kit.fontawesome.com/e5507d7bda.js"
+		crossorigin="anonymous"></script>
 	<link rel="stylesheet" href="style.css" />
 	<script src="script.js"></script>
-	<link rel="icon" type="image/png" href="favicon.ico" />
+	<link rel="icon" type="image/png" href="iconopag.ico" />
 
 </h:head>
 
 <h:body>
-
-	<div class="div-logIn">
+	<div id="box-formulario">
 		<div>
-			<div class="row">
-				<h:form>
-					<h:panelGrid columns="2" class="cuadroForm">
-						<h:outputLabel for="identificacion" value="Identificación:"
-							class="label" />
-						<h:inputText value="#{UserBean.nombreUsuario}" type="text"
-							id="identificacion" class="input-text" />
+			<h:form>
+				<h:panelGrid columns="2" class="cuadroForm">
+					<h:outputLabel for="identificacion" value="Identificación:"
+						class="label" />
+					<h:inputText value="#{UserBean.nombreUsuario}" type="text"
+						id="identificacion" class="input-text" />
 
-						<h:outputLabel for="toggle" value="Contraseña:" class="label" />
-						<h:panelGroup class="password-container">
-							<p:password id="toggle" value="#{UserBean.contrasegna}"
-								toggleMask="true" redisplay="true" class="password-input" />
-						</h:panelGroup>
+					<h:outputLabel for="toggle" value="Contraseña:" class="label" />
+					<h:panelGroup class="password-container">
 
-						<h:outputLabel />
-						<h:panelGroup style="text-align: center; width: 100%;">
-							<h:outputLabel></h:outputLabel>
-							<p:commandButton action="#{UserBean.mostrar}" value="Crear"
-								class="boton-ingresar" />
-						</h:panelGroup>
-					</h:panelGrid>
-				</h:form>
-			</div>
+						<p:password id="toggle" value="#{passwordView.password6}"
+							toggleMask="true" redisplay="true" />
+					</h:panelGroup>
+
+					<h:outputLabel />
+					<h:panelGroup>
+						<h:outputLabel></h:outputLabel>
+						<p:commandButton action="#{UserBean.mostrar}" value="Ingresar"
+							class="boton-ingresar" />
+					</h:panelGroup>
+					<h:panelGroup>
+						<br>
+						<i class="fa-solid fa-user fa-xl"></i>
+						<a id="nuevo-usuario" href="newUser.xhtml">Crear Usuario</a>
+						</br>
+					</h:panelGroup>
+					<h:panelGroup style="text-align: left">
+						<br>
+						<i class="fa-solid fa-question fa-xl"></i>
+						<a href="control.xhtml">Recordar contraseña</a>
+						</br>
+
+					</h:panelGroup>
+				</h:panelGrid>
+			</h:form>
 		</div>
-
 	</div>
 </h:body>
 </html>

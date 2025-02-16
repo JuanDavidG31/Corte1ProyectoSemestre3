@@ -1,44 +1,49 @@
 @charset "UTF-8";
 
 body {
-	background-color: #FFE701;
+	background-image: url("FondoFruver.jpeg");
+	background-position: center center;
+	overflow: hidden;
+	background-repeat: no-repeat;
 }
 
-h1 {
-	color: white;
+#box-formulario {
+	margin: 570px;
+	margin-top: 150px;
+	width: 400px;
+	height: 300px;
+	border-radius: 21px;
+	display: flex;
 }
 
-.div-logIn {
-	place-items: center;
+#nuevo-usuario{
+	padding: 15px;
 }
 
 .cuadroForm {
 	width: 400px;
-	height: 460px;
-	background: black;
+	height: 300px;
+	margin: auto;
 	display: flex;
 	justify-content: center;
 	align-items: center;
-	margin: 10%;
 	border-radius: 21px;
 	background: #FFE701;
-	box-shadow: -5px 5px 100px #d9c401, 5px -5px 100px #ffff01;
 }
 
 .boton-ingresar {
+	
 	background: #e8e8e8 !important;
 	border: none !important;
 	padding: 10px 25px !important;
 	border-radius: 15px !important;
-}
 
-.boton-ingresar {
 	padding: 0px 25px;
 	border: unset;
 	border-radius: 15px;
 	color: #212121 !important;
 	z-index: 1;
-	position: relative;
+
 	background: #e8e8e8;
 	font-weight: 1000;
 	font-size: 17px;
@@ -56,7 +61,7 @@ h1 {
 	height: 100%;
 	width: 0;
 	border-radius: 15px;
-	background-color: #212121 ;
+	background-color: #212121;
 	z-index: -1;
 	-webkit-box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
 	box-shadow: 4px 8px 19px -3px rgba(0, 0, 0, 0.27);
@@ -89,19 +94,16 @@ h1 {
 }
 
 .password-container {
-	position: relative;
-	display: flex;
-	align-items: center;
-	width: max-content;
-}
-
-.password-input {
-	padding-left: 30px; /* Espacio para el ícono */
+    position: relative;
+    display: flex;
+    align-items: center;
+    width: max-content;
 }
 
 .password-input .ui-password-toggle {
-	position: absolute;
-	left: 5px; /* Alinea el botón en el centro izquierdo */
-	top: 50%;
-	transform: translateY(-50%);
+    position: absolute;
+    right: 10px; 
+    top: 50%;
+    transform: translateY(-50%); 
+    cursor: pointer;
 }
