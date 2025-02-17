@@ -39,10 +39,10 @@
 					Sesión</h2>
 
 
-				<div class="field" style="margin-bottom: 20px;">
+						<div class="field" style="margin-bottom: 20px;">
 					<span class="ui-float-label"> <p:inputText
-							value="#{UserBean.id}" id="identificacion" required="true"
-							style="width: 100%;"
+							id="identificacion"
+							required="true" style="width: 100%;"
 							validatorMessage="Ingrese un número de identificación válido">
 							<f:validateRegex pattern="^\d{6,12}$" />
 						</p:inputText> <p:outputLabel for="identificacion"
