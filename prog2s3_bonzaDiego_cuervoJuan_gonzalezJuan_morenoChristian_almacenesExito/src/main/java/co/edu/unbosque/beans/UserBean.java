@@ -14,7 +14,7 @@ import jakarta.inject.Named;
 
 public class UserBean {
 
-	private int id;
+	private String id;
 	private String contrasegna;
 	private String contrasegna2;
 	private String nombre;
@@ -22,16 +22,18 @@ public class UserBean {
 	private String correo;
 	private String cargo;
 	private UsuarioDAO uDao;
+	private ArrayList<UsuarioDTO> Usuario;
 
 	public UserBean() {
 		uDao = new UsuarioDAO();
+		Usuario = new ArrayList<>();
 	}
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -85,15 +87,17 @@ public class UserBean {
 
 	public void crear() {
 
-		
+		Usuario = uDao.getAll();
+		for (UsuarioDTO u : Usuario) {
+			String tId = u.getId();
 
-	}
-
-	public void mostrar() {
-		ArrayList<UsuarioDTO> u = uDao.getAll();
-		for (UsuarioDTO usuarioDTO : u) {
-			System.out.println(usuarioDTO);
+			if (!tId.equals(id)) {
+				uDao.add(new UsuarioDTO(id, contrasegna, nombre, apellido, correo, cargo));
+				break;
+			} else {
+				continue;
+			}
 		}
-	}
 
+	}
 }
