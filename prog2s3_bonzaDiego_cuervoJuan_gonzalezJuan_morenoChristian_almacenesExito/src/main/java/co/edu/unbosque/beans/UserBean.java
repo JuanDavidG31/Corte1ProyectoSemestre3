@@ -88,16 +88,23 @@ public class UserBean {
 	public void crear() {
 
 		Usuario = uDao.getAll();
-		for (UsuarioDTO u : Usuario) {
-			String tId = u.getId();
-
-			if (!tId.equals(id)) {
-				uDao.add(new UsuarioDTO(id, contrasegna, nombre, apellido, correo, cargo));
-				break;
-			} else {
-				continue;
+		if(Usuario.isEmpty()) {
+			uDao.add(new UsuarioDTO(id, contrasegna, nombre, apellido, correo, cargo));
+			return;
+		}else { 
+			for (UsuarioDTO u : Usuario) {
+				String tId = u.getId().toString();
+				
+				if (!tId.equals(id)) {
+					uDao.add(new UsuarioDTO(id, contrasegna, nombre, apellido, correo, cargo));
+					return;
+				} else {
+					continue;
+				}
 			}
+			return;
 		}
+		
 
 	}
 }
