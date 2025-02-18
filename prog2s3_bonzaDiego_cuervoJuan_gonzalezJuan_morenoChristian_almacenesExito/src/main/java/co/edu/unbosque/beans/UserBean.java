@@ -15,7 +15,7 @@ import jakarta.inject.Named;
 
 @Named("UserBean")
 @RequestScoped
-
+//prueba
 public class UserBean {
 
 	private String id;
