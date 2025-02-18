@@ -1,12 +1,16 @@
 package co.edu.unbosque.beans;
 
+import java.io.IOException;
 import java.util.ArrayList;
+
+import org.primefaces.PrimeFaces;
 
 import co.edu.unbosque.model.UsuarioDTO;
 import co.edu.unbosque.model.persistence.UsuarioDAO;
 
 import jakarta.enterprise.context.RequestScoped;
-
+import jakarta.faces.application.FacesMessage;
+import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
 
 @Named("UserBean")
@@ -86,25 +90,44 @@ public class UserBean {
 	}
 
 	public void crear() {
-
 		Usuario = uDao.getAll();
-		if(Usuario.isEmpty()) {
+
+		if (Usuario.isEmpty()) {
 			uDao.add(new UsuarioDTO(id, contrasegna, nombre, apellido, correo, cargo));
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Usuario creado exitosamente"));
+			PrimeFaces.current().executeScript("alert('Usuario creado exitosamente');");
+			try {
+				FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			return;
-		}else { 
+		} else {
 			for (UsuarioDTO u : Usuario) {
 				String tId = u.getId().toString();
-				
-				if (!tId.equals(id)) {
-					uDao.add(new UsuarioDTO(id, contrasegna, nombre, apellido, correo, cargo));
+
+				if (tId.equals(id)) {
+					FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN,
+							"Advertencia", "El usuario con ese ID ya existe"));
+					PrimeFaces.current().executeScript("alert('El usuario con ese ID ya existe');");
 					return;
 				} else {
 					continue;
+
 				}
+			}
+
+			uDao.add(new UsuarioDTO(id, contrasegna, nombre, apellido, correo, cargo));
+			FacesContext.getCurrentInstance().addMessage(null,
+					new FacesMessage(FacesMessage.SEVERITY_INFO, "Éxito", "Usuario creado exitosamente"));
+			PrimeFaces.current().executeScript("alert('Usuario creado exitosamente');");
+			try {
+				FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+			} catch (IOException e) {
+				e.printStackTrace();
 			}
 			return;
 		}
-		
-
 	}
 }
