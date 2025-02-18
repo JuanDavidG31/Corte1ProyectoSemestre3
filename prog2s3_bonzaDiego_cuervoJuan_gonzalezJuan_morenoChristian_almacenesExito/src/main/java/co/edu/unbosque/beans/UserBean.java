@@ -103,7 +103,7 @@ public class UserBean {
 				e.printStackTrace();
 			}
 			return;
-		} else {
+		} else if (!Usuario.isEmpty()) {
 			for (UsuarioDTO u : Usuario) {
 				String tId = u.getId().toString();
 
@@ -127,6 +127,8 @@ public class UserBean {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
+			return;
+		} else {
 			return;
 		}
 	}
