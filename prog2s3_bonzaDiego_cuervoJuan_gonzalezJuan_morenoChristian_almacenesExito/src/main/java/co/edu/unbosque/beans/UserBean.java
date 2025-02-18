@@ -130,4 +130,29 @@ public class UserBean {
 			return;
 		}
 	}
+
+	public void iniciarSesion() {
+		Usuario = uDao.getAll();
+		for (UsuarioDTO u : Usuario) {
+			String tId = u.getId().toString();
+			String tContrasegna = u.getContrasegna().toString();
+			if (tId.equals(id) && tContrasegna.equals(contrasegna)) {
+
+				FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put("usuario", u);
+
+				try {
+
+					FacesContext.getCurrentInstance().getExternalContext().redirect("menu.xhtml");
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+				return;
+			} else {
+				continue;
+			}
+		}
+
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "ID o contraseña incorrectos."));
+	}
 }
