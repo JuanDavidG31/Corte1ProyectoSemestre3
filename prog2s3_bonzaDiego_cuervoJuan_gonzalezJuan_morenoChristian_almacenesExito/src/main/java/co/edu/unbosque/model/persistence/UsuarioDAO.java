@@ -18,7 +18,12 @@ public class UsuarioDAO implements CRUDOperation<UsuarioDTO, Usuario> {
 
 	@Override
 	public void delete(int positionToDelete) {
-		// TODO Auto-generated method stub
+		if (positionToDelete < 0 || positionToDelete >= listaUsuario.size()) {
+			return;
+		} else {
+			listaUsuario.remove(positionToDelete);
+			return;
+		}
 
 	}
 
@@ -106,8 +111,7 @@ public class UsuarioDAO implements CRUDOperation<UsuarioDTO, Usuario> {
 			for (String row : rows) {
 				String[] cols = row.split(";");
 				Usuario tempo = new Usuario();
-				int id = Integer.parseInt(cols[0]);
-				tempo.setId(id);
+				tempo.setId(cols[0]);
 				tempo.setContrasegna(cols[1]);
 				tempo.setNombre(cols[2]);
 				tempo.setApellido(cols[3]);

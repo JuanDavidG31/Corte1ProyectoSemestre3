@@ -2,7 +2,7 @@ package co.edu.unbosque.model;
 
 public class UsuarioDTO {
 
-	private int id;
+	private String id;
 	private String contrasegna;
 	private String nombre;
 	private String apellido;
@@ -13,7 +13,7 @@ public class UsuarioDTO {
 		// TODO Auto-generated constructor stub
 	}
 
-	public UsuarioDTO(int id, String contrasegna, String nombre, String apellido, String correo, String cargo) {
+	public UsuarioDTO(String id, String contrasegna, String nombre, String apellido, String correo, String cargo) {
 		super();
 		this.id = id;
 		this.contrasegna = contrasegna;
@@ -23,11 +23,13 @@ public class UsuarioDTO {
 		this.cargo = cargo;
 	}
 
-	public int getId() {
+	
+
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
