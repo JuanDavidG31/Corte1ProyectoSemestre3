@@ -13,7 +13,7 @@ public class Usuario implements Serializable {
 	private String cargo;
 
 	public Usuario() {
-		// TODO Auto-generated constructor stub
+		
 	}
 
 	public Usuario(String id, String contrasegna, String nombre, String apellido, String correo, String cargo) {
