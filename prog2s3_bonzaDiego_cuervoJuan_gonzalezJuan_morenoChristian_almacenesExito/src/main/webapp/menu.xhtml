@@ -37,14 +37,14 @@
 				
 				<!-- Contenedor para los botones -->
 				<div class="botones-wrapper">
-					<p:commandButton update="@form" value="Opción 1"
-						class="boton-crear" />
-					<p:commandButton update="@form" value="Opcion 2"
-						class="boton-crear" />
-					<p:commandButton update="@form" value="Opcion 3"
-						class="boton-crear" />
-					<p:commandButton update="@form" value="Opcion 4"
-						class="boton-crear" />
+					<p:commandButton update="@form" value="Menú Carnes"
+						class="boton-crear" action="carne.xhtml?faces-redirect=true"/>
+					<p:commandButton update="@form" value="Menú lacteos"
+						class="boton-crear" action="lacteo.xhtml?faces-redirect=true"/>
+					<p:commandButton update="@form" value="Menú Ropa"
+						class="boton-crear" action="ropa.xhtml?faces-redirect=true"/>
+					<p:commandButton update="@form" value="Menú Juguetes"
+						class="boton-crear" action="juguete.xhtml?faces-redirect=true"/>
 				
 					<p:commandButton value="Inicio" icon="fa fa-home"
 						class="boton-home" action="index.xhtml?faces-redirect=true"
