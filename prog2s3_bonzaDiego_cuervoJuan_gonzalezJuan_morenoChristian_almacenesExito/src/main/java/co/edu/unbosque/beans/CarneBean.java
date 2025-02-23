@@ -65,6 +65,7 @@ public class CarneBean implements Serializable {
     }
 
     public void saveProduct() {
+    	System.out.println("Hola");
         if (this.selectedProduct.getCode() == null) {
             this.selectedProduct.setCode(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9));
             this.products.add(this.selectedProduct);
