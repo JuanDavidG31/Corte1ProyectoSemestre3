@@ -7,15 +7,15 @@ import org.primefaces.PrimeFaces;
 
 import co.edu.unbosque.model.UsuarioDTO;
 import co.edu.unbosque.model.persistence.UsuarioDAO;
-
+import jakarta.enterprise.context.ApplicationScoped;
 import jakarta.enterprise.context.RequestScoped;
 import jakarta.faces.application.FacesMessage;
+
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Named;
 
 @Named("UserBean")
-@RequestScoped
-
+@ApplicationScoped
 public class UserBean {
 
 	private String id;
@@ -154,5 +154,56 @@ public class UserBean {
 
 		FacesContext.getCurrentInstance().addMessage(null,
 				new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "ID o contraseña incorrectos."));
+	}
+
+	public void recordarContrasegna() {
+
+		Usuario = uDao.getAll();
+		for (UsuarioDTO u : Usuario) {
+			String tId = u.getId().toString();
+			if (tId.equals(id)) {
+				try {
+					FacesContext.getCurrentInstance().getExternalContext().redirect("newPassword.xhtml");
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			} else {
+
+				continue;
+			}
+
+		}
+		FacesContext.getCurrentInstance().addMessage(null,
+				new FacesMessage(FacesMessage.SEVERITY_ERROR, "Error", "ID incorrecto."));
+	}
+
+	public void cambiarContrasegna() {
+
+		ArrayList<UsuarioDTO> u = uDao.getAll();
+		for (UsuarioDTO usuarioDTO : u) {
+
+			String tId = usuarioDTO.getId().toString();
+			// System.out.println(tId);
+			if (tId.equals(id)) {
+				System.out.println("perraa");
+				if (uDao.update(new UsuarioDTO(id, "", "", "", "", ""),
+						new UsuarioDTO(id, contrasegna, usuarioDTO.getNombre().toString(),
+								usuarioDTO.getApellido().toString(), usuarioDTO.getCorreo().toString(),
+								usuarioDTO.getCargo().toString()))) {
+					try {
+						FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
+					} catch (IOException e) {
+						// TODO Auto-generated catch block
+						e.printStackTrace();
+					}
+				} else {
+					System.out.println("No se pudo actualizar");
+				}
+				break;
+			} else {
+				continue;
+			}
+		}
 	}
 }

@@ -74,7 +74,7 @@ public class UsuarioDAO implements CRUDOperation<UsuarioDTO, Usuario> {
 
 	@Override
 	public boolean update(UsuarioDTO previous, UsuarioDTO newData) {
-		Usuario found = find2(DataMapper.UsuarioDTOToUsuario(previous));
+		Usuario found = find(DataMapper.UsuarioDTOToUsuario(previous));
 		if (found != null) {
 			listaUsuario.remove(found);
 			listaUsuario.add(DataMapper.UsuarioDTOToUsuario(newData));
@@ -141,7 +141,7 @@ public class UsuarioDAO implements CRUDOperation<UsuarioDTO, Usuario> {
 		Usuario found = null;
 		if (!listaUsuario.isEmpty()) {
 			for (Usuario Usuario : listaUsuario) {
-				if (Usuario.getId() == toFind.getId()) {
+				if (Usuario.getId().equals(toFind.getId())) {
 					found = Usuario;
 					return found;
 				} else {
