@@ -184,13 +184,10 @@ public class UserBean {
 		for (UsuarioDTO usuarioDTO : u) {
 
 			String tId = usuarioDTO.getId().toString();
-			// System.out.println(tId);
 			if (tId.equals(id)) {
-				System.out.println("perraa");
-				if (uDao.update(new UsuarioDTO(id, "", "", "", "", ""),
+				if (uDao.update(new UsuarioDTO(id, null, null, null, null, null),
 						new UsuarioDTO(id, contrasegna, usuarioDTO.getNombre().toString(),
-								usuarioDTO.getApellido().toString(), usuarioDTO.getCorreo().toString(),
-								usuarioDTO.getCargo().toString()))) {
+								usuarioDTO.getApellido().toString(), usuarioDTO.getCorreo().toString(), ""))) {
 					try {
 						FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
 					} catch (IOException e) {

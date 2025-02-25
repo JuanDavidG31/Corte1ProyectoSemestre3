@@ -76,6 +76,7 @@ public class UsuarioDAO implements CRUDOperation<UsuarioDTO, Usuario> {
 	public boolean update(UsuarioDTO previous, UsuarioDTO newData) {
 		Usuario found = find(DataMapper.UsuarioDTOToUsuario(previous));
 		if (found != null) {
+			System.out.println("si");
 			listaUsuario.remove(found);
 			listaUsuario.add(DataMapper.UsuarioDTOToUsuario(newData));
 			writeFile();
