@@ -25,6 +25,34 @@
 	<link rel="icon" type="image/png" href="iconopag.ico" />
 </h:head>
 <h:body>
+	
+	<nav class="navbar navbar-dark bg-dark position-absolute top-0 w-100">
+	<div class="container-fluid">
+		<span class="navbar-brand mb-0 h6">Menú Principal</span>
+
+	
+		<div class="dropdown">
+			<button class="btn btn-outline-light dropdown-toggle" type="button"
+				id="menuOpciones" data-bs-toggle="dropdown" aria-expanded="false">
+				Opciones</button>
+			<ul class="dropdown-menu dropdown-menu-end"
+				aria-labelledby="menuOpciones">
+				<li><h:form>
+						<p:commandLink value="Cambiar Contraseña"
+							styleClass="dropdown-item"
+							action="newPassword.xhtml?faces-redirect=true" />
+					</h:form></li>
+				<li><h:form>
+						<p:commandLink value="Cerrar Sesión"
+							styleClass="dropdown-item text-danger"
+							action="index.xhtml?faces-redirect=true" ajax="false"
+							immediate="true" />
+					</h:form></li>
+			</ul>
+		</div>
+	</div>
+	</nav>
+
 	<div id="box-formulario">
 		<div class="card">
 			<h:form>
@@ -38,18 +66,16 @@
 
 				<!-- Contenedor para los botones -->
 				<div class="botones-wrapper">
-					<p:commandButton value="Menú Carnes" class="boton-crear"
-						action="carne.xhtml?faces-redirect=true" ajax="false" />
-					<p:commandButton value="Menú Lácteos" class="boton-crear"
+					<p:commandButton value="Menú Carnes" icon=" fa-solid fa-drumstick-bite " class="boton-crear"
+						action="carne.xhtml?faces-redirect=true" ajax="false"  />
+					<p:commandButton value="Menú Lácteos" icon="fa-solid fa-cheese" class="boton-crear"
 						action="lacteo.xhtml?faces-redirect=true" ajax="false" />
-					<p:commandButton value="Menú Ropa" class="boton-crear"
+					<p:commandButton value="Menú Ropa" icon="fa-solid fa-shirt" class="boton-crear"
 						action="ropa.xhtml?faces-redirect=true" ajax="false" />
-					<p:commandButton value="Menú Juguetes" class="boton-crear"
+					<p:commandButton value="Menú Juguetes" icon="fa-solid fa-puzzle-piece" class="boton-crear"
 						action="juguete.xhtml?faces-redirect=true" ajax="false" />
 
-					<p:commandButton value="Inicio" icon="fa fa-home"
-						class="boton-home" action="index.xhtml?faces-redirect=true"
-						ajax="false" immediate="true" />
+
 				</div>
 
 			</h:form>
@@ -57,4 +83,5 @@
 	</div>
 
 </h:body>
+
 </html>
