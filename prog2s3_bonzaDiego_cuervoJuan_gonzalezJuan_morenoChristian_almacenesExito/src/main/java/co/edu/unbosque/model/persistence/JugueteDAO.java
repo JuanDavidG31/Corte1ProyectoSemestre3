@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import co.edu.unbosque.model.Juguete;
 import co.edu.unbosque.model.JugueteDTO;
+import co.edu.unbosque.model.Carne;
 import co.edu.unbosque.model.InventoryStatus;
 import co.edu.unbosque.model.Product;
 import jakarta.annotation.PostConstruct;
@@ -108,7 +109,7 @@ public class JugueteDAO implements CRUDOperation<JugueteDTO, Juguete> {
 
 	@Override
 	public boolean delete(JugueteDTO toDelete) {
-		Juguete found = find(DataMapper.JugueteDTOToJuguete(toDelete));
+		Juguete found = find2(DataMapper.JugueteDTOToJuguete(toDelete));
 		if (found != null) {
 			listaJuguete.remove(found);
 			writeFile();
@@ -121,7 +122,7 @@ public class JugueteDAO implements CRUDOperation<JugueteDTO, Juguete> {
 
 	@Override
 	public boolean update(JugueteDTO previous, JugueteDTO newData) {
-		Juguete found = find(DataMapper.JugueteDTOToJuguete(previous));
+		Juguete found = find2(DataMapper.JugueteDTOToJuguete(previous));
 		if (found != null) {
 			listaJuguete.remove(found);
 			listaJuguete.add(DataMapper.JugueteDTOToJuguete(newData));
@@ -211,7 +212,19 @@ public class JugueteDAO implements CRUDOperation<JugueteDTO, Juguete> {
 
 	@Override
 	public Juguete find2(Juguete toFind) {
-		// TODO Auto-generated method stub
+	Juguete found = null;
+		if (!listaJuguete.isEmpty()) {
+			for (Juguete Juguete : listaJuguete) {
+				if (Juguete.getCode().equals(toFind.getCode())) {
+					found = Juguete;
+					return found;
+				} else {
+					continue;
+				}
+			}
+		} else {
+			return null;
+		}
 		return null;
 	}
 }

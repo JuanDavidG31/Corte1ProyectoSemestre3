@@ -14,13 +14,14 @@ import co.edu.unbosque.model.persistence.JugueteDAO;
 import co.edu.unbosque.model.persistence.JugueteDAO;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.RequestScoped;
+import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 
 @Named("JugueteBean")
-@RequestScoped
+@SessionScoped
 
 public class JugueteBean implements Serializable {
 
@@ -214,18 +215,15 @@ public class JugueteBean implements Serializable {
 	}
 
 	public void eliminar() {
-		ArrayList<JugueteDTO> ca = jugueteDao.getAll();
+		if (jugueteDTO != null) {
 
-		for (JugueteDTO jugueteDTO : ca) {
+			jugueteDao.delete(jugueteDTO);
 
-			int tNumDoc = jugueteDTO.getId();
-			System.out.println(tNumDoc);
-			if (tNumDoc == id) {
-				jugueteDao.delete(new JugueteDTO(id, code, name, description, image, price, category, quantity,
-						inventoryStatus, rating, null));
-			}
+			juguete.removeIf(c -> c.getId() == jugueteDTO.getId());
+			juguete = jugueteDao.getAll();
+
+			jugueteDTO = null;
 		}
-
 	}
 	
 	public String createCode() {

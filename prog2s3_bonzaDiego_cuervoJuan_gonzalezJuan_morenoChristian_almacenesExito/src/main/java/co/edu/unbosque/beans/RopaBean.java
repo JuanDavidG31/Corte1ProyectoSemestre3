@@ -14,13 +14,14 @@ import co.edu.unbosque.model.persistence.RopaDAO;
 import co.edu.unbosque.model.persistence.RopaDAO;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.RequestScoped;
+import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 
 @Named("RopaBean")
-@RequestScoped
+@SessionScoped
 
 public class RopaBean implements Serializable {
 
@@ -214,18 +215,15 @@ public class RopaBean implements Serializable {
 	}
 
 	public void eliminar() {
-		ArrayList<RopaDTO> ca = ropaDao.getAll();
+		if (ropaDTO != null) {
 
-		for (RopaDTO ropaDTO : ca) {
+			ropaDao.delete(ropaDTO);
 
-			int tNumDoc = ropaDTO.getId();
-			System.out.println(tNumDoc);
-			if (tNumDoc == id) {
-				ropaDao.delete(new RopaDTO(id, code, name, description, image, price, category, quantity,
-						inventoryStatus, rating, null));
-			}
+			ropa.removeIf(c -> c.getId() == ropaDTO.getId());
+			ropa = ropaDao.getAll();
+
+			ropaDTO = null;
 		}
-
 	}
 	
 	public String createCode() {

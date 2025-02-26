@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import co.edu.unbosque.model.Ropa;
 import co.edu.unbosque.model.RopaDTO;
+import co.edu.unbosque.model.Carne;
 import co.edu.unbosque.model.InventoryStatus;
 import co.edu.unbosque.model.Product;
 import jakarta.annotation.PostConstruct;
@@ -108,7 +109,7 @@ public class RopaDAO implements CRUDOperation<RopaDTO, Ropa> {
 
 	@Override
 	public boolean delete(RopaDTO toDelete) {
-		Ropa found = find(DataMapper.RopaDTOToRopa(toDelete));
+		Ropa found = find2(DataMapper.RopaDTOToRopa(toDelete));
 		if (found != null) {
 			listaRopa.remove(found);
 			writeFile();
@@ -121,7 +122,7 @@ public class RopaDAO implements CRUDOperation<RopaDTO, Ropa> {
 
 	@Override
 	public boolean update(RopaDTO previous, RopaDTO newData) {
-		Ropa found = find(DataMapper.RopaDTOToRopa(previous));
+		Ropa found = find2(DataMapper.RopaDTOToRopa(previous));
 		if (found != null) {
 			listaRopa.remove(found);
 			listaRopa.add(DataMapper.RopaDTOToRopa(newData));
@@ -211,7 +212,19 @@ public class RopaDAO implements CRUDOperation<RopaDTO, Ropa> {
 
 	@Override
 	public Ropa find2(Ropa toFind) {
-		// TODO Auto-generated method stub
+		Ropa found = null;
+		if (!listaRopa.isEmpty()) {
+			for (Ropa Ropa : listaRopa) {
+				if (Ropa.getCode().equals(toFind.getCode())) {
+					found = Ropa;
+					return found;
+				} else {
+					continue;
+				}
+			}
+		} else {
+			return null;
+		}
 		return null;
 	}
 }

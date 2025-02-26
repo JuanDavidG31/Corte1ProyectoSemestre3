@@ -14,13 +14,14 @@ import co.edu.unbosque.model.persistence.LacteoDAO;
 import co.edu.unbosque.model.persistence.LacteoDAO;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.RequestScoped;
+import jakarta.enterprise.context.SessionScoped;
 import jakarta.faces.application.FacesMessage;
 import jakarta.faces.context.FacesContext;
 import jakarta.inject.Inject;
 import jakarta.inject.Named;
 
 @Named("LacteoBean")
-@RequestScoped
+@SessionScoped
 
 public class LacteoBean implements Serializable {
 
@@ -214,18 +215,15 @@ public class LacteoBean implements Serializable {
 	}
 
 	public void eliminar() {
-		ArrayList<LacteoDTO> ca = lacteoDao.getAll();
+		if (lacteoDTO != null) {
 
-		for (LacteoDTO lacteoDTO : ca) {
+			lacteoDao.delete(lacteoDTO);
 
-			int tNumDoc = lacteoDTO.getId();
-			System.out.println(tNumDoc);
-			if (tNumDoc == id) {
-				lacteoDao.delete(new LacteoDTO(id, code, name, description, image, price, category, quantity,
-						inventoryStatus, rating, null));
-			}
+			lacteo.removeIf(c -> c.getId() == lacteoDTO.getId());
+			lacteo = lacteoDao.getAll();
+
+			lacteoDTO = null;
 		}
-
 	}
 	
 	public String createCode() {

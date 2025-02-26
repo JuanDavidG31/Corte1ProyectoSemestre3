@@ -7,6 +7,7 @@ import java.util.UUID;
 
 import co.edu.unbosque.model.Lacteo;
 import co.edu.unbosque.model.LacteoDTO;
+import co.edu.unbosque.model.Carne;
 import co.edu.unbosque.model.InventoryStatus;
 import co.edu.unbosque.model.Product;
 import jakarta.annotation.PostConstruct;
@@ -108,7 +109,7 @@ public class LacteoDAO implements CRUDOperation<LacteoDTO, Lacteo> {
 
 	@Override
 	public boolean delete(LacteoDTO toDelete) {
-		Lacteo found = find(DataMapper.LacteoDTOToLacteo(toDelete));
+		Lacteo found = find2(DataMapper.LacteoDTOToLacteo(toDelete));
 		if (found != null) {
 			listaLacteo.remove(found);
 			writeFile();
@@ -121,7 +122,7 @@ public class LacteoDAO implements CRUDOperation<LacteoDTO, Lacteo> {
 
 	@Override
 	public boolean update(LacteoDTO previous, LacteoDTO newData) {
-		Lacteo found = find(DataMapper.LacteoDTOToLacteo(previous));
+		Lacteo found = find2(DataMapper.LacteoDTOToLacteo(previous));
 		if (found != null) {
 			listaLacteo.remove(found);
 			listaLacteo.add(DataMapper.LacteoDTOToLacteo(newData));
@@ -211,7 +212,19 @@ public class LacteoDAO implements CRUDOperation<LacteoDTO, Lacteo> {
 
 	@Override
 	public Lacteo find2(Lacteo toFind) {
-		// TODO Auto-generated method stub
+		Lacteo found = null;
+		if (!listaLacteo.isEmpty()) {
+			for (Lacteo Lacteo : listaLacteo) {
+				if (Lacteo.getCode().equals(toFind.getCode())) {
+					found = Lacteo;
+					return found;
+				} else {
+					continue;
+				}
+			}
+		} else {
+			return null;
+		}
 		return null;
 	}
 }

@@ -130,10 +130,13 @@
 						<p:resetInput target=":dialogs:manage-product-content" />
 					</p:commandButton>
 					<p:commandButton class="ui-button-warning rounded-button"
-						icon="pi pi-trash" process="@this"
-						oncomplete="PF('deleteProductDialog').show()">
+						icon="pi pi-trash" process="@this" action="#{LacteoBean.eliminar}"
+						update=":form:dt-products">
 						<f:setPropertyActionListener value="#{product}"
 							target="#{LacteoBean.lacteoDTO}" />
+						<p:confirm header="Confirmar"
+							message="¿Está seguro de eliminar este producto?"
+							icon="pi pi-exclamation-triangle" />
 					</p:commandButton>
 				</p:column>
 
