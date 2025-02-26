@@ -88,10 +88,13 @@
 					</p:commandButton>
 
 					<p:commandButton class="ui-button-warning rounded-button"
-						icon="pi pi-trash" process="@this"
-						actionListener="#{CarneBean.eliminar}" update=":form:dt-products">
+						icon="pi pi-trash" process="@this" action="#{CarneBean.eliminar}"
+						update=":form:dt-products">
 						<f:setPropertyActionListener value="#{product}"
 							target="#{CarneBean.carneDTO}" />
+						<p:confirm header="Confirmar"
+							message="¿Está seguro de eliminar este producto?"
+							icon="pi pi-exclamation-triangle" />
 					</p:commandButton>
 
 				</p:column>

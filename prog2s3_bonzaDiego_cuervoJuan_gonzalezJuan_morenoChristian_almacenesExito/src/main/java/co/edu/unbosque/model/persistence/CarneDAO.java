@@ -85,12 +85,14 @@ public class CarneDAO implements CRUDOperation<CarneDTO, Carne> {
 
 	@Override
 	public boolean delete(CarneDTO toDelete) {
-
-		listaCarne.remove(toDelete);
-		writeFile();
-		writeSerialized();
-		return true;
-
+		Carne carneToRemove = find2(DataMapper.CarneDTOToCarne(toDelete));
+		if (carneToRemove != null) {
+			listaCarne.remove(carneToRemove);
+			writeFile();
+			writeSerialized();
+			return true;
+		}
+		return false;
 	}
 
 	@Override
@@ -185,7 +187,19 @@ public class CarneDAO implements CRUDOperation<CarneDTO, Carne> {
 
 	@Override
 	public Carne find2(Carne toFind) {
-		// TODO Auto-generated method stub
+		Carne found = null;
+		if (!listaCarne.isEmpty()) {
+			for (Carne Carne : listaCarne) {
+				if (Carne.getCode().equals(toFind.getCode())) {
+					found = Carne;
+					return found;
+				} else {
+					continue;
+				}
+			}
+		} else {
+			return null;
+		}
 		return null;
 	}
 }

@@ -207,14 +207,17 @@ public class CarneBean implements Serializable {
 		carneDTO = new CarneDTO();
 	}
 
-	public void eliminar(CarneDTO carne) {
+	public void eliminar() {
+		if (carneDTO != null) {
+			System.out.println("Eliminando: " + carneDTO.getId());
 
-		if (carne != null) {
+			carneDao.delete(carneDTO);
 
-			carneDao.delete(carne);
+			carne.removeIf(c -> c.getId() == carneDTO.getId());
+			carne = carneDao.getAll();
 
+			carneDTO = null;
 		}
-
 	}
 
 	public String createCode() {
