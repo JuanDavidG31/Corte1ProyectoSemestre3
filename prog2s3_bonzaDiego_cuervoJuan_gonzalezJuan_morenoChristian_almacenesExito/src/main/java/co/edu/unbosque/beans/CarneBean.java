@@ -52,11 +52,11 @@ public class CarneBean implements Serializable {
 		carne = carneDao.getAll();
 
 		if (carne == null) {
-			System.out.println("ERROR: carneDao.getAll() devolvió null.");
+			System.out.println("ERROR");
 		} else {
-			System.out.println("Datos cargados: " + carne.size());
+
 			for (CarneDTO c : carne) {
-				System.out.println("ID: " + c.getId() + ", Nombre: " + c.getName());
+				System.out.println("Code: " + c.getCode() + ", Nombre: " + c.getName());
 			}
 		}
 	}
@@ -207,14 +207,27 @@ public class CarneBean implements Serializable {
 		carneDTO = new CarneDTO();
 	}
 
-	public void eliminar(CarneDTO carne) {
+	public void eliminar() {
+		if (carneDTO != null) {
 
-		if (carne != null) {
+			carneDao.delete(carneDTO);
 
-			carneDao.delete(carne);
+			carne.removeIf(c -> c.getId() == carneDTO.getId());
+			carne = carneDao.getAll();
 
+			carneDTO = null;
 		}
+	}
 
+	public void actualizar() {
+		if (carneDTO != null) {
+			CarneDTO carneActualizada = new CarneDTO(carneDTO.getId(), carneDTO.getCode(), carneDTO.getName(),
+					carneDTO.getDescription(), carneDTO.getImage(), carneDTO.getPrice(), carneDTO.getCategory(),
+					carneDTO.getQuantity(), carneDTO.getInventoryStatus(), carneDTO.getRating(), null);
+
+			carneDao.update(carneDTO, carneActualizada);
+			carne = carneDao.getAll();
+		}
 	}
 
 	public String createCode() {
