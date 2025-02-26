@@ -26,22 +26,9 @@
 						styleClass="ui-button-success" style="margin-right: .5rem">
 						<p:resetInput target=":dialogs:manage-product-content" />
 					</p:commandButton>
-					<p:commandButton id="delete-products-button" icon="pi pi-trash"
-						styleClass="ui-button-danger" update="@this">
-						<p:confirm header="Confirmar"
-							message="Desea eliminar los productos seleccionados?"
-							icon="pi pi-exclamation-triangle" />
-					</p:commandButton>
+					
 				</p:toolbarGroup>
-				<p:toolbarGroup align="right">
-					<p:fileUpload mode="simple" skinSimple="true" label="Importar"
-						chooseIcon="pi pi-download" />
-					<p:commandButton value="Exportar" icon="pi pi-upload"
-						styleClass="ui-button-help" ajax="false">
-						<p:dataExporter type="pdf" target="dt-products"
-							fileName="products" />
-					</p:commandButton>
-				</p:toolbarGroup>
+				
 			</p:toolbar>
 
 			<p:dataTable id="dt-products" widgetVar="dtProducts" var="product"
@@ -58,13 +45,13 @@
 					</div>
 				</f:facet>
 
-				<p:ajax event="rowSelect" update=":form:delete-products-button" />
-				<p:ajax event="rowUnselect" update=":form:delete-products-button" />
+				<p:ajax event="rowSelect"  />
+				<p:ajax event="rowUnselect"  />
 				<p:ajax event="rowSelectCheckbox"
-					update=":form:delete-products-button" />
+					 />
 				<p:ajax event="rowUnselectCheckbox"
-					update=":form:delete-products-button" />
-				<p:ajax event="toggleSelect" update=":form:delete-products-button" />
+					 />
+				<p:ajax event="toggleSelect"  />
 
 				<p:column selectionMode="multiple" exportable="false"></p:column>
 
@@ -129,11 +116,12 @@
 							<p:outputLabel for="category">Categoria</p:outputLabel>
 							<p:selectOneRadio id="category" value="#{JugueteBean.category}"
 								layout="responsive" columns="2">
-								<f:selectItem itemLabel="Rayo Mcqueen" itemValue="Rayo Mcqueen" />
-								<f:selectItem itemLabel="Carne de res" itemValue="Carne de res" />
-								<f:selectItem itemLabel="Carne de cerdo"
-									itemValue="Carne de cerdo" />
-								<f:selectItem itemLabel="Pollo" itemValue="Pollo" />
+								<f:selectItem itemLabel="Juegos de mesa" itemValue="Juegos de mesa" />
+								<f:selectItem itemLabel="Juegos cooperativos" itemValue="Juegos cooperativos" />
+								<f:selectItem itemLabel="Juguetes de construcción"
+									itemValue="Juguetes de construcción" />
+								<f:selectItem itemLabel="Puzzles y rompecabezas" itemValue="Puzzles y rompecabezas" />
+								<f:selectItem itemLabel="Balones Etc" itemValue="Balones Etc" />
 							</p:selectOneRadio>
 						</div>
 						<div class="formgrid grid">
@@ -167,7 +155,7 @@
 				severity="warn">
 				<p:commandButton value="Si" icon="pi pi-check"
 					actionListener="#{JugueteBean.eliminar}" process="@this"
-					update=":form:delete-products-button"
+					
 					oncomplete="PF('deleteProductDialog').hide()" />
 				<p:commandButton value="No" type="button"
 					styleClass="ui-button-secondary" icon="pi pi-times"
