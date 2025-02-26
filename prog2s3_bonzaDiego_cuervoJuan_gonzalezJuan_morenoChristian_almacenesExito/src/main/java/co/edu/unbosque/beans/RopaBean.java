@@ -198,10 +198,15 @@ public class RopaBean implements Serializable {
 	}
 
 	public void guardar() {
-		RopaDTO nuevoProducto = new RopaDTO(id, code, name, description, image, price, category, quantity,
-				inventoryStatus, rating, null);
+		RopaDTO nuevoProducto = new RopaDTO(id, createCode(), name, description, image, price, category, quantity,
+				iStatus(quantity), rating, null);
 		ropaDao.add(nuevoProducto);
 		ropa = ropaDao.getAll();
+		this.name = "";
+		this.description = "";
+		this.category = "";
+		this.price = 0;
+		this.quantity = 0;
 	}
 
 	public void openNew() {
@@ -220,6 +225,27 @@ public class RopaBean implements Serializable {
 						inventoryStatus, rating, null));
 			}
 		}
+
+	}
+	
+	public String createCode() {
+
+		String i = UUID.randomUUID().toString().replace("-", "").substring(0, 8);
+
+		return i;
+	}
+
+	public InventoryStatus iStatus(int cant) {
+
+		if (cant <= 0) {
+			return InventoryStatus.OUTOFSTOCK;
+		} else if (cant >= 1 && cant <= 10) {
+			return InventoryStatus.LOWSTOCK;
+		} else if (cant > 10) {
+
+			return InventoryStatus.INSTOCK;
+		}
+		return null;
 
 	}
 

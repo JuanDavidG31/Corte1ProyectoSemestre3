@@ -87,9 +87,7 @@
 				</p:column>
 				<p:column headerText="Estado" sortBy="#{product.inventoryStatus}"
 					filterBy="#{product.inventoryStatus}">
-					<h:outputText
-						styleClass="product-badge status-#{product.inventoryStatus.name}"
-						value="#{product.inventoryStatus.text}" />
+					<h:outputText value="#{product.inventoryStatus.text}" />
 				</p:column>
 				<p:column exportable="false" ariaHeaderText="Actions">
 					<p:commandButton icon="pi pi-pencil"
