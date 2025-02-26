@@ -187,7 +187,8 @@ public class UserBean {
 			if (tId.equals(id)) {
 				if (uDao.update(new UsuarioDTO(id, null, null, null, null, null),
 						new UsuarioDTO(id, contrasegna, usuarioDTO.getNombre().toString(),
-								usuarioDTO.getApellido().toString(), usuarioDTO.getCorreo().toString(), ""))) {
+								usuarioDTO.getApellido().toString(), usuarioDTO.getCorreo().toString(),
+								usuarioDTO.getCargo().toString()))) {
 					try {
 						FacesContext.getCurrentInstance().getExternalContext().redirect("index.xhtml");
 					} catch (IOException e) {
