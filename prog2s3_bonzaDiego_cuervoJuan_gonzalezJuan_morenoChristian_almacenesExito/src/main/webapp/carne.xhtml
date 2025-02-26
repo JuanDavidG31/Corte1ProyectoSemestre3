@@ -87,9 +87,7 @@
 				</p:column>
 				<p:column headerText="Estado" sortBy="#{product.inventoryStatus}"
 					filterBy="#{product.inventoryStatus}">
-					<h:outputText
-						styleClass="product-badge status-#{product.inventoryStatus.name}"
-						value="#{product.inventoryStatus.text}" />
+					<h:outputText value="#{product.inventoryStatus.text}" />
 				</p:column>
 				<p:column exportable="false" ariaHeaderText="Actions">
 					<p:commandButton icon="pi pi-pencil"
@@ -101,12 +99,15 @@
 							target="#{CarneBean.carneDTO}" />
 						<p:resetInput target=":dialogs:manage-product-content" />
 					</p:commandButton>
+
 					<p:commandButton class="ui-button-warning rounded-button"
 						icon="pi pi-trash" process="@this"
-						oncomplete="PF('deleteProductDialog').show()">
+						actionListener="#{CarneBean.eliminar}"
+						update=":form:dt-products">
 						<f:setPropertyActionListener value="#{product}"
 							target="#{CarneBean.carneDTO}" />
 					</p:commandButton>
+
 				</p:column>
 
 			</p:dataTable>

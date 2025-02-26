@@ -2,6 +2,7 @@ package co.edu.unbosque.beans;
 
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.UUID;
 
 import co.edu.unbosque.model.CarneDTO;
 
@@ -190,28 +191,50 @@ public class CarneBean implements Serializable {
 	}
 
 	public void guardar() {
-		CarneDTO nuevoProducto = new CarneDTO(id, code, name, description, image, price, category, quantity,
-				inventoryStatus, rating, null);
+
+		CarneDTO nuevoProducto = new CarneDTO(id, createCode(), name, description, image, price, category, quantity,
+				iStatus(quantity), rating, null);
 		carneDao.add(nuevoProducto);
 		carne = carneDao.getAll();
+		this.name = "";
+		this.description = "";
+		this.category = "";
+		this.price = 0;
+		this.quantity = 0;
 	}
 
 	public void openNew() {
 		carneDTO = new CarneDTO();
 	}
 
-	public void eliminar() {
-		ArrayList<CarneDTO> ca = carneDao.getAll();
+	public void eliminar(CarneDTO carne) {
 
-		for (CarneDTO carneDTO : ca) {
+		if (carne != null) {
 
-			int tNumDoc = carneDTO.getId();
-			System.out.println(tNumDoc);
-			if (tNumDoc == id) {
-				carneDao.delete(new CarneDTO(id, code, name, description, image, price, category, quantity,
-						inventoryStatus, rating, null));
-			}
+			carneDao.delete(carne);
+
 		}
+
+	}
+
+	public String createCode() {
+
+		String i = UUID.randomUUID().toString().replace("-", "").substring(0, 8);
+
+		return i;
+	}
+
+	public InventoryStatus iStatus(int cant) {
+
+		if (cant <= 0) {
+			return InventoryStatus.OUTOFSTOCK;
+		} else if (cant >= 1 && cant <= 10) {
+			return InventoryStatus.LOWSTOCK;
+		} else if (cant > 10) {
+
+			return InventoryStatus.INSTOCK;
+		}
+		return null;
 
 	}
 

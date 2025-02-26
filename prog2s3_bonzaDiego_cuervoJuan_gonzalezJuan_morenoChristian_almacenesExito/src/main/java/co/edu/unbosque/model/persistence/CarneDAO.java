@@ -43,20 +43,6 @@ public class CarneDAO implements CRUDOperation<CarneDTO, Carne> {
 
 	}
 
-	public ArrayList<Carne> getClonedCarne(int size) {
-		ArrayList<Carne> results = new ArrayList<>();
-		ArrayList<Carne> originals = getListaCarne(size);
-		for (Carne original : originals) {
-			results.add((original));
-		}
-
-		for (Carne product : results) {
-			product.setCode(UUID.randomUUID().toString().replace("-", "").substring(0, 8));
-		}
-
-		return results;
-	}
-
 	@Override
 	public void delete(int positionToDelete) {
 		if (positionToDelete < 0 || positionToDelete >= listaCarne.size()) {
@@ -99,15 +85,12 @@ public class CarneDAO implements CRUDOperation<CarneDTO, Carne> {
 
 	@Override
 	public boolean delete(CarneDTO toDelete) {
-		Carne found = find(DataMapper.CarneDTOToCarne(toDelete));
-		if (found != null) {
-			listaCarne.remove(found);
-			writeFile();
-			writeSerialized();
-			return true;
-		} else {
-			return false;
-		}
+
+		listaCarne.remove(toDelete);
+		writeFile();
+		writeSerialized();
+		return true;
+
 	}
 
 	@Override
