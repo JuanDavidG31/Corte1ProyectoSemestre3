@@ -2,7 +2,7 @@ package co.edu.unbosque.model;
 
 public enum InventoryStatus {
 
-	INSTOCK("In Stock"), OUTOFSTOCK("Out of Stock"), LOWSTOCK("Low Stock");
+	INSTOCK("En Stock"), OUTOFSTOCK("Agotado"), LOWSTOCK("Stock bajo");
 
 	private String text;
 
