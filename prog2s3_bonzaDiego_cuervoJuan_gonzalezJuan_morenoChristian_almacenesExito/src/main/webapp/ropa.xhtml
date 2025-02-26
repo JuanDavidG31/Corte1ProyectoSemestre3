@@ -20,19 +20,16 @@
 			<p:toolbar>
 				<p:toolbarGroup>
 					<p:commandButton value="Nuevo" icon="pi pi-plus"
-						actionListener="#{RopaBean.openNew}"
+						action="#{RopaBean.openNew}"
 						update=":dialogs:manage-product-content"
 						oncomplete="PF('manageProductDialog').show()"
 						styleClass="ui-button-success" style="margin-right: .5rem">
 						<p:resetInput target=":dialogs:manage-product-content" />
 					</p:commandButton>
-					<p:commandButton id="delete-products-button"
-						value="#{RopaBean.deleteButtonMessage}" icon="pi pi-trash"
-						actionListener="#{RopaBean.deleteSelectedProducts}"
-						styleClass="ui-button-danger"
-						disabled="#{!RopaBean.hasSelectedProducts()}" update="@this">
-						<p:confirm header="Confirmation"
-							message="Delete the selected products?"
+					<p:commandButton id="delete-products-button" icon="pi pi-trash"
+						styleClass="ui-button-danger" update="@this">
+						<p:confirm header="Confirmar"
+							message="Desea eliminar los productos seleccionados?"
 							icon="pi pi-exclamation-triangle" />
 					</p:commandButton>
 				</p:toolbarGroup>
@@ -48,16 +45,15 @@
 			</p:toolbar>
 
 			<p:dataTable id="dt-products" widgetVar="dtProducts" var="product"
-				value="#{RopaBean.products}" reflow="true"
-				styleClass="products-table" selection="#{RopaBean.selectedProducts}"
+				value="#{RopaBean.ropa}" reflow="true" styleClass="products-table"
 				rowKey="#{product.id}" paginator="true" rows="10"
 				selectionRowMode="add" paginatorPosition="bottom">
 				<f:facet name="header">
 					<div class="products-table-header">
-						<span style="font-weight: bold">PRODUCToS</span> <span
+						<span style="font-weight: bold">PRODUCTOS</span> <span
 							class="filter-container ui-input-icon-left"> <i
 							class="pi pi-search"></i> <p:inputText id="globalFilter"
-								onkeyup="PF('dtProducts').filter()" placeholder="Search" />
+								onkeyup="PF('dtProducts').filter()" placeholder="Buscar" />
 						</span>
 					</div>
 				</f:facet>
@@ -80,10 +76,6 @@
 					filterBy="#{product.name}">
 					<h:outputText value="#{product.name}" />
 				</p:column>
-				<p:column headerText="Image" exportable="false">
-					<p:graphicImage name="images/product/#{product.image}"
-						library="demo" styleClass="product-image" />
-				</p:column>
 				<p:column headerText="Precio" sortBy="#{product.price}">
 					<h:outputText value="#{product.price}" style="font-weight: 700">
 						<f:convertNumber currencySymbol="$" type="currency" />
@@ -93,13 +85,10 @@
 					filterBy="#{product.category}">
 					<h:outputText value="#{product.category}" />
 				</p:column>
-				<p:column headerText="Reseñas" sortBy="#{product.rating}">
-					<p:rating value="#{product.rating}" readonly="true" />
-				</p:column>
 				<p:column headerText="Estado" sortBy="#{product.inventoryStatus}"
 					filterBy="#{product.inventoryStatus}">
 					<h:outputText
-						styleClass="product-badge status-#{product.inventoryStatus.name().toLowerCase()}"
+						styleClass="product-badge status-#{product.inventoryStatus.name}"
 						value="#{product.inventoryStatus.text}" />
 				</p:column>
 				<p:column exportable="false" ariaHeaderText="Actions">
@@ -109,14 +98,14 @@
 						styleClass="edit-button rounded-button ui-button-success"
 						process="@this">
 						<f:setPropertyActionListener value="#{product}"
-							target="#{RopaBean.selectedProduct}" />
+							target="#{RopaBean.ropaDTO}" />
 						<p:resetInput target=":dialogs:manage-product-content" />
 					</p:commandButton>
 					<p:commandButton class="ui-button-warning rounded-button"
 						icon="pi pi-trash" process="@this"
 						oncomplete="PF('deleteProductDialog').show()">
 						<f:setPropertyActionListener value="#{product}"
-							target="#{RopaBean.selectedProduct}" />
+							target="#{RopaBean.ropaDTO}" />
 					</p:commandButton>
 				</p:column>
 
@@ -127,25 +116,20 @@
 			<p:dialog header="Detalles del producto" showEffect="fade"
 				modal="true" widgetVar="manageProductDialog" responsive="true">
 				<p:outputPanel id="manage-product-content" class="ui-fluid">
-					<p:outputPanel rendered="#{not empty RopaBean.selectedProduct}">
-						<p:graphicImage
-							name="images/product/#{RopaBean.selectedProduct.image}"
-							library="demo" styleClass="product-image"
-							rendered="#{not empty RopaBean.selectedProduct.image}" />
+					<p:outputPanel>
+
 						<div class="field">
 							<p:outputLabel for="name">Nombre</p:outputLabel>
-							<p:inputText id="name" value="#{RopaBean.selectedProduct.name}"
-								required="true" />
+							<p:inputText id="name" value="#{RopaBean.name}" required="true" />
 						</div>
 						<div class="field">
 							<p:outputLabel for="description">Descripción</p:outputLabel>
-							<p:inputTextarea id="description"
-								value="#{RopaBean.selectedProduct.description}" />
+							<p:inputTextarea id="description" value="#{RopaBean.description}" />
 						</div>
 						<div class="field">
 							<p:outputLabel for="category">Categoria</p:outputLabel>
 							<p:selectOneRadio id="category"
-								value="#{RopaBean.selectedProduct.category}" layout="responsive"
+								value="#{RopaBean.category}" layout="responsive"
 								columns="2">
 								<f:selectItem itemLabel="Camisetas" itemValue="Camisetas" />
 								<f:selectItem itemLabel="Pantalones" itemValue="Pantalones" />
@@ -157,14 +141,13 @@
 						<div class="formgrid grid">
 							<div class="field col">
 								<p:outputLabel for="price">Precio</p:outputLabel>
-								<p:inputNumber id="price"
-									value="#{RopaBean.selectedProduct.price}" symbol=" COP"
-									symbolPosition="s" decimalSeparator="." thousandSeparator="," />
+								<p:inputNumber id="price" value="#{RopaBean.price}"
+									symbol=" COP" symbolPosition="s" decimalSeparator="."
+									thousandSeparator="," />
 							</div>
 							<div class="field col">
 								<p:outputLabel for="quantity">Cantidad</p:outputLabel>
-								<p:spinner id="quantity" min="0"
-									value="#{RopaBean.selectedProduct.quantity}" />
+								<p:spinner id="quantity" min="0" value="#{RopaBean.quantity}" />
 							</div>
 						</div>
 					</p:outputPanel>
@@ -172,8 +155,8 @@
 
 				<f:facet name="footer">
 					<p:commandButton value="Guardar" icon="pi pi-check"
-						actionListener="#{RopaBean.saveProduct}"
-						update="manage-product-content"
+						action="#{RopaBean.guardar}" update=":form:dt-products"
+						onclick="PF('manageProductDialog').hide()"
 						process="manage-product-content @this" />
 					<p:commandButton value="Cancelar" icon="pi pi-times"
 						onclick="PF('manageProductDialog').hide()"
@@ -185,7 +168,7 @@
 				width="300" message="Desea eliminar el producto?" header="Confirmar"
 				severity="warn">
 				<p:commandButton value="Si" icon="pi pi-check"
-					actionListener="#{RopaBean.deleteProduct}" process="@this"
+					actionListener="#{RopaBean.eliminar}" process="@this"
 					update=":form:delete-products-button"
 					oncomplete="PF('deleteProductDialog').hide()" />
 				<p:commandButton value="No" type="button"
