@@ -97,7 +97,7 @@ public class CarneDAO implements CRUDOperation<CarneDTO, Carne> {
 
 	@Override
 	public boolean update(CarneDTO previous, CarneDTO newData) {
-		Carne found = find(DataMapper.CarneDTOToCarne(previous));
+		Carne found = find2(DataMapper.CarneDTOToCarne(previous));
 		if (found != null) {
 			listaCarne.remove(found);
 			listaCarne.add(DataMapper.CarneDTOToCarne(newData));
