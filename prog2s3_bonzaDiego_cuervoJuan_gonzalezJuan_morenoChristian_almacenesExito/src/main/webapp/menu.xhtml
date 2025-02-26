@@ -33,22 +33,23 @@
 				</p:messages>
 
 				<h2 style="text-align: center; margin-bottom: 20px;">Menú</h2>
-				<h6 style="text-align: center; margin-bottom: 20px;">Selecciona una opción</h6>
-				
+				<h6 style="text-align: center; margin-bottom: 20px;">Selecciona
+					una opción</h6>
+
 				<!-- Contenedor para los botones -->
 				<div class="botones-wrapper">
-					<p:commandButton update="@form" value="Menú Carnes"
-						class="boton-crear" action="carne.xhtml?faces-redirect=true"/>
-					<p:commandButton update="@form" value="Menú lacteos"
-						class="boton-crear" action="lacteo.xhtml?faces-redirect=true"/>
-					<p:commandButton update="@form" value="Menú Ropa"
-						class="boton-crear" action="ropa.xhtml?faces-redirect=true"/>
-					<p:commandButton update="@form" value="Menú Juguetes"
-						class="boton-crear" action="juguete.xhtml?faces-redirect=true"/>
-				
+					<p:commandButton value="Menú Carnes" class="boton-crear"
+						action="carne.xhtml?faces-redirect=true" ajax="false" />
+					<p:commandButton value="Menú Lácteos" class="boton-crear"
+						action="lacteo.xhtml?faces-redirect=true" ajax="false" />
+					<p:commandButton value="Menú Ropa" class="boton-crear"
+						action="ropa.xhtml?faces-redirect=true" ajax="false" />
+					<p:commandButton value="Menú Juguetes" class="boton-crear"
+						action="juguete.xhtml?faces-redirect=true" ajax="false" />
+
 					<p:commandButton value="Inicio" icon="fa fa-home"
 						class="boton-home" action="index.xhtml?faces-redirect=true"
-						immediate="true" />
+						ajax="false" immediate="true" />
 				</div>
 
 			</h:form>
