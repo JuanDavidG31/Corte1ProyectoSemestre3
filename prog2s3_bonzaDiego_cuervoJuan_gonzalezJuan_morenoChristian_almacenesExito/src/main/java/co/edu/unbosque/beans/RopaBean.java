@@ -7,7 +7,10 @@ import java.util.UUID;
 
 import org.primefaces.PrimeFaces;
 
+import co.edu.unbosque.model.RopaDTO;
+import co.edu.unbosque.model.InventoryStatus;
 import co.edu.unbosque.model.Product;
+import co.edu.unbosque.model.persistence.RopaDAO;
 import co.edu.unbosque.model.persistence.RopaDAO;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.RequestScoped;
@@ -19,93 +22,205 @@ import jakarta.inject.Named;
 @Named("RopaBean")
 @RequestScoped
 
-public class RopaBean implements Serializable{
+public class RopaBean implements Serializable {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	private List<Product> products;
 
-    private Product selectedProduct;
+	private int id;
+	private String code;
+	private String name;
+	private String description;
+	private String image;
+	private double price;
+	private String category;
+	private int quantity;
+	private InventoryStatus inventoryStatus;
+	private int rating;
 
-    private List<Product> selectedProducts;
+	private ArrayList<RopaDTO> ropa;
+	private ArrayList<RopaDTO> ropa2;
+	private RopaDTO ropaDTO;
+	private RopaDAO ropaDao;
 
-    @Inject
-    private RopaDAO productService;
+	public RopaBean() {
+		ropa = new ArrayList<>();
+		ropaDao = new RopaDAO();
+		ropa2 = new ArrayList<RopaDTO>();
 
-    @PostConstruct
-    public void init() {
-        this.products = this.productService.getClonedProducts(100);
-        this.selectedProducts = new ArrayList<Product>();
-    }
+	}
 
-    public List<Product> getProducts() {
-        return products;
-    }
+	@PostConstruct
+	public void init() {
+		System.out.println("Iniciando RopaBean...");
 
-    public Product getSelectedProduct() {
-        return selectedProduct;
-    }
+		ropa = ropaDao.getAll();
 
-    public void setSelectedProduct(Product selectedProduct) {
-        this.selectedProduct = selectedProduct;
-    }
+		if (ropa == null) {
+			System.out.println("ERROR: RopaDao.getAll() devolvió null.");
+		} else {
+			System.out.println("Datos cargados: " + ropa.size());
+			for (RopaDTO c : ropa) {
+				System.out.println("ID: " + c.getId() + ", Nombre: " + c.getName());
+			}
+		}
+	}
 
-    public List<Product> getSelectedProducts() {
-        return selectedProducts;
-    }
+	public RopaBean(int id, String code, String name, String description, String image, double price, String category,
+			int quantity, InventoryStatus inventoryStatus, int rating, ArrayList<RopaDTO> ropa, RopaDAO ropaDao) {
+		super();
+		this.id = id;
+		this.code = code;
+		this.name = name;
+		this.description = description;
+		this.image = image;
+		this.price = price;
+		this.category = category;
+		this.quantity = quantity;
+		this.inventoryStatus = inventoryStatus;
+		this.rating = rating;
+		this.ropa = ropa;
+		this.ropaDao = ropaDao;
+	}
 
-    public void setSelectedProducts(List<Product> selectedProducts) {
-        this.selectedProducts = selectedProducts;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public void openNew() {
-        this.selectedProduct = new Product();
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public void saveProduct() {
-        if (this.selectedProduct.getCode() == null) {
-            this.selectedProduct.setCode(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9));
-            this.products.add(this.selectedProduct);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Product Added"));
-        }
-        else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Product Updated"));
-        }
+	public String getCode() {
+		return code;
+	}
 
-        PrimeFaces.current().executeScript("PF('manageProductDialog').hide()");
-        PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
-    }
+	public void setCode(String code) {
+		this.code = code;
+	}
 
-    public void deleteProduct() {
-        this.products.remove(this.selectedProduct);
-        this.selectedProducts.remove(this.selectedProduct);
-        this.selectedProduct = null;
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Product Removed"));
-        PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getDeleteButtonMessage() {
-        if (hasSelectedProducts()) {
-            int size = this.selectedProducts.size();
-            return size > 1 ? size + " products selected" : "1 product selected";
-        }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-        return "Delete";
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public boolean hasSelectedProducts() {
-        return this.selectedProducts != null && !this.selectedProducts.isEmpty();
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    public void deleteSelectedProducts() {
-        this.products.removeAll(this.selectedProducts);
-        this.selectedProducts = null;
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Products Removed"));
-        PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
-        PrimeFaces.current().executeScript("PF('dtProducts').clearFilters()");
-    }
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+	public InventoryStatus getInventoryStatus() {
+		return inventoryStatus;
+	}
+
+	public void setInventoryStatus(InventoryStatus inventoryStatus) {
+		this.inventoryStatus = inventoryStatus;
+	}
+
+	public int getRating() {
+		return rating;
+	}
+
+	public void setRating(int rating) {
+		this.rating = rating;
+	}
+
+	public ArrayList<RopaDTO> getRopa() {
+		return ropa;
+	}
+
+	public void setRopa(ArrayList<RopaDTO> ropa) {
+		this.ropa = ropa;
+	}
+
+	public RopaDAO getRopaDao() {
+		return ropaDao;
+	}
+
+	public void setRopaDao(RopaDAO ropaDao) {
+		this.ropaDao = ropaDao;
+	}
+
+	public ArrayList<RopaDTO> getRopa2() {
+		return ropa2;
+	}
+
+	public void setRopa2(ArrayList<RopaDTO> ropa2) {
+		this.ropa2 = ropa2;
+	}
+
+	public RopaDTO getRopaDTO() {
+		return ropaDTO;
+	}
+
+	public void setRopaDTO(RopaDTO ropaDTO) {
+		this.ropaDTO = ropaDTO;
+	}
+
+	public void guardar() {
+		RopaDTO nuevoProducto = new RopaDTO(id, code, name, description, image, price, category, quantity,
+				inventoryStatus, rating, null);
+		ropaDao.add(nuevoProducto);
+		ropa = ropaDao.getAll();
+	}
+
+	public void openNew() {
+		ropaDTO = new RopaDTO();
+	}
+
+	public void eliminar() {
+		ArrayList<RopaDTO> ca = ropaDao.getAll();
+
+		for (RopaDTO ropaDTO : ca) {
+
+			int tNumDoc = ropaDTO.getId();
+			System.out.println(tNumDoc);
+			if (tNumDoc == id) {
+				ropaDao.delete(new RopaDTO(id, code, name, description, image, price, category, quantity,
+						inventoryStatus, rating, null));
+			}
+		}
+
+	}
 
 }

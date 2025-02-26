@@ -7,7 +7,10 @@ import java.util.UUID;
 
 import org.primefaces.PrimeFaces;
 
+import co.edu.unbosque.model.LacteoDTO;
+import co.edu.unbosque.model.InventoryStatus;
 import co.edu.unbosque.model.Product;
+import co.edu.unbosque.model.persistence.LacteoDAO;
 import co.edu.unbosque.model.persistence.LacteoDAO;
 import jakarta.annotation.PostConstruct;
 import jakarta.enterprise.context.RequestScoped;
@@ -25,87 +28,199 @@ public class LacteoBean implements Serializable {
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
-	
-	private List<Product> products;
 
-    private Product selectedProduct;
+	private int id;
+	private String code;
+	private String name;
+	private String description;
+	private String image;
+	private double price;
+	private String category;
+	private int quantity;
+	private InventoryStatus inventoryStatus;
+	private int rating;
 
-    private List<Product> selectedProducts;
+	private ArrayList<LacteoDTO> lacteo;
+	private ArrayList<LacteoDTO> lacteo2;
+	private LacteoDTO lacteoDTO;
+	private LacteoDAO lacteoDao;
 
-    @Inject
-    private LacteoDAO productService;
+	public LacteoBean() {
+		lacteo = new ArrayList<>();
+		lacteoDao = new LacteoDAO();
+		lacteo2 = new ArrayList<LacteoDTO>();
 
-    @PostConstruct
-    public void init() {
-        this.products = this.productService.getClonedProducts(100);
-        this.selectedProducts = new ArrayList<Product>();
-    }
+	}
 
-    public List<Product> getProducts() {
-        return products;
-    }
+	@PostConstruct
+	public void init() {
+		System.out.println("Iniciando LacteoBean...");
 
-    public Product getSelectedProduct() {
-        return selectedProduct;
-    }
+		lacteo = lacteoDao.getAll();
 
-    public void setSelectedProduct(Product selectedProduct) {
-        this.selectedProduct = selectedProduct;
-    }
+		if (lacteo == null) {
+			System.out.println("ERROR: LacteoDao.getAll() devolvió null.");
+		} else {
+			System.out.println("Datos cargados: " + lacteo.size());
+			for (LacteoDTO c : lacteo) {
+				System.out.println("ID: " + c.getId() + ", Nombre: " + c.getName());
+			}
+		}
+	}
 
-    public List<Product> getSelectedProducts() {
-        return selectedProducts;
-    }
+	public LacteoBean(int id, String code, String name, String description, String image, double price, String category,
+			int quantity, InventoryStatus inventoryStatus, int rating, ArrayList<LacteoDTO> lacteo, LacteoDAO lacteoDao) {
+		super();
+		this.id = id;
+		this.code = code;
+		this.name = name;
+		this.description = description;
+		this.image = image;
+		this.price = price;
+		this.category = category;
+		this.quantity = quantity;
+		this.inventoryStatus = inventoryStatus;
+		this.rating = rating;
+		this.lacteo = lacteo;
+		this.lacteoDao = lacteoDao;
+	}
 
-    public void setSelectedProducts(List<Product> selectedProducts) {
-        this.selectedProducts = selectedProducts;
-    }
+	public int getId() {
+		return id;
+	}
 
-    public void openNew() {
-        this.selectedProduct = new Product();
-    }
+	public void setId(int id) {
+		this.id = id;
+	}
 
-    public void saveProduct() {
-        if (this.selectedProduct.getCode() == null) {
-            this.selectedProduct.setCode(UUID.randomUUID().toString().replaceAll("-", "").substring(0, 9));
-            this.products.add(this.selectedProduct);
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Product Added"));
-        }
-        else {
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Product Updated"));
-        }
+	public String getCode() {
+		return code;
+	}
 
-        PrimeFaces.current().executeScript("PF('manageProductDialog').hide()");
-        PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
-    }
+	public void setCode(String code) {
+		this.code = code;
+	}
 
-    public void deleteProduct() {
-        this.products.remove(this.selectedProduct);
-        this.selectedProducts.remove(this.selectedProduct);
-        this.selectedProduct = null;
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Product Removed"));
-        PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
-    }
+	public String getName() {
+		return name;
+	}
 
-    public String getDeleteButtonMessage() {
-        if (hasSelectedProducts()) {
-            int size = this.selectedProducts.size();
-            return size > 1 ? size + " products selected" : "1 product selected";
-        }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-        return "Delete";
-    }
+	public String getDescription() {
+		return description;
+	}
 
-    public boolean hasSelectedProducts() {
-        return this.selectedProducts != null && !this.selectedProducts.isEmpty();
-    }
+	public void setDescription(String description) {
+		this.description = description;
+	}
 
-    public void deleteSelectedProducts() {
-        this.products.removeAll(this.selectedProducts);
-        this.selectedProducts = null;
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("Products Removed"));
-        PrimeFaces.current().ajax().update("form:messages", "form:dt-products");
-        PrimeFaces.current().executeScript("PF('dtProducts').clearFilters()");
-    }
+	public String getImage() {
+		return image;
+	}
+
+	public void setImage(String image) {
+		this.image = image;
+	}
+
+	public double getPrice() {
+		return price;
+	}
+
+	public void setPrice(double price) {
+		this.price = price;
+	}
+
+	public String getCategory() {
+		return category;
+	}
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+	public int getQuantity() {
+		return quantity;
+	}
+
+	public void setQuantity(int quantity) {
+		this.quantity = quantity;
+	}
+
+	public InventoryStatus getInventoryStatus() {
+		return inventoryStatus;
+	}
+
+	public void setInventoryStatus(InventoryStatus inventoryStatus) {
+		this.inventoryStatus = inventoryStatus;
+	}
+
+	public int getRating() {
+		return rating;
+	}
+
+	public void setRating(int rating) {
+		this.rating = rating;
+	}
+
+	public ArrayList<LacteoDTO> getLacteo() {
+		return lacteo;
+	}
+
+	public void setLacteo(ArrayList<LacteoDTO> lacteo) {
+		this.lacteo = lacteo;
+	}
+
+	public LacteoDAO getLacteoDao() {
+		return lacteoDao;
+	}
+
+	public void setLacteoDao(LacteoDAO lacteoDao) {
+		this.lacteoDao = lacteoDao;
+	}
+
+	public ArrayList<LacteoDTO> getLacteo2() {
+		return lacteo2;
+	}
+
+	public void setLacteo2(ArrayList<LacteoDTO> lacteo2) {
+		this.lacteo2 = lacteo2;
+	}
+
+	public LacteoDTO getLacteoDTO() {
+		return lacteoDTO;
+	}
+
+	public void setLacteoDTO(LacteoDTO lacteoDTO) {
+		this.lacteoDTO = lacteoDTO;
+	}
+
+	public void guardar() {
+		LacteoDTO nuevoProducto = new LacteoDTO(id, code, name, description, image, price, category, quantity,
+				inventoryStatus, rating, null);
+		lacteoDao.add(nuevoProducto);
+		lacteo = lacteoDao.getAll();
+	}
+
+	public void openNew() {
+		lacteoDTO = new LacteoDTO();
+	}
+
+	public void eliminar() {
+		ArrayList<LacteoDTO> ca = lacteoDao.getAll();
+
+		for (LacteoDTO lacteoDTO : ca) {
+
+			int tNumDoc = lacteoDTO.getId();
+			System.out.println(tNumDoc);
+			if (tNumDoc == id) {
+				lacteoDao.delete(new LacteoDTO(id, code, name, description, image, price, category, quantity,
+						inventoryStatus, rating, null));
+			}
+		}
+
+	}
 
 }
