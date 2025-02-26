@@ -3,13 +3,13 @@
 body {
 	margin: 0;
 	height: 100vh;
-	background-image: url("FondoFruver.jpeg");
-	background-size: cover;
+	background-color: white; 
 	background-position: center;
 	background-repeat: no-repeat;
 	display: flex;
 	justify-content: center;
 	align-items: center;
+	background-size: cover;
 }
 
 /* Contenedor principal del formulario */

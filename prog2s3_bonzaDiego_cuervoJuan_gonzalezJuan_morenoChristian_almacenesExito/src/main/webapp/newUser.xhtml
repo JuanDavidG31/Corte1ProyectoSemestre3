@@ -31,10 +31,8 @@
 <h:body>
 	<div id="box-formulario">
 		<div class="card">
-			<h:form>
-				<p:messages>
-					<p:autoUpdate />
-				</p:messages>
+			<h:form id="formulario1">
+
 
 				<h2 style="text-align: center; margin-bottom: 20px;">Crear
 					Usuario</h2>
@@ -53,10 +51,10 @@
 							value="Apellido" />
 					</span>
 				</div>
-					<div class="field" style="margin-bottom: 20px;">
+				<div class="field" style="margin-bottom: 20px;">
 					<span class="ui-float-label"> <p:inputText
-							id="identificacion"
-							required="true" style="width: 100%;"
+							value="#{UserBean.id}" id="identificacion" required="true"
+							style="width: 100%;"
 							validatorMessage="Ingrese un número de identificación válido">
 							<f:validateRegex pattern="^\d{6,12}$" />
 						</p:inputText> <p:outputLabel for="identificacion"
@@ -77,23 +75,32 @@
 				<div class="field" style="margin-bottom: 20px;">
 					<span class="ui-float-label"> <p:password
 							value="#{UserBean.contrasegna}" id="pwd1" match="pwd2"
-							required="true" style="width: 100%;" /> <p:outputLabel
-							for="pwd1" value="Contraseña" />
+							required="true" style="width: 100%;" feedback="true"
+							promptLabel="Ingrese una contraseña segura"
+							validatorMessage="La contraseña debe tener al menos 8 caracteres, incluyendo una mayúscula, una minúscula y un número.">
+							<f:validateRegex pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d).{8,}$" />
+						</p:password> <p:outputLabel for="pwd1" value="Contraseña" />
 					</span>
 				</div>
 
 				<div class="field" style="margin-bottom: 20px;">
 					<span class="ui-float-label"> <p:password
 							value="#{UserBean.contrasegna2}" id="pwd2" required="true"
-							style="width: 100%;" /> <p:outputLabel for="pwd2"
-							value="Confirmar Contraseña" />
+							style="width: 100%;" feedback="true"
+							promptLabel="Confirme su contraseña"
+							validatorMessage="Las contraseñas no coinciden." /> <p:outputLabel
+							for="pwd2" value="Confirmar Contraseña" />
 					</span>
 				</div>
+
 
 				<div class="field" style="margin-bottom: 20px;">
 					<span> <p:selectOneMenu id="lazy" dynamic="true"
 							style="width: 100%;">
-							<f:selectItem itemLabel="Seleccione un cargo" itemValue="" />
+							<f:selectItem itemLabel="Seleccione un cargo" itemValue="0" />
+							<f:selectItem itemLabel="Administrador" itemValue="Administrador" />
+							<f:selectItem itemLabel="Cajero" itemValue="Cajero" />
+							<f:selectItem itemLabel="Empleado" itemValue="Empleado" />
 							<f:selectItems value="#{UserBean.cargo}" />
 						</p:selectOneMenu>
 					</span>
@@ -102,11 +109,10 @@
 				<div class="field botones-container">
 
 					<p:commandButton action="#{UserBean.crear}" value="Guardar"
-						styleClass="boton-crear" />
+						icon="fa-solid fa-floppy-disk" styleClass="boton-crear" update="formulario1" />
 					<p:commandButton value="Inicio" icon="fa fa-home"
 						styleClass="boton-home" action="index.xhtml?faces-redirect=true"
 						immediate="true" />
-
 
 				</div>
 

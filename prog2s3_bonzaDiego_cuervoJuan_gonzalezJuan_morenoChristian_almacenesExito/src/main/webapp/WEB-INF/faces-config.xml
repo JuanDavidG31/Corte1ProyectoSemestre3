@@ -10,5 +10,26 @@
 		<managed-bean-class>co.edu.unbosque.beans.UserBean</managed-bean-class>
 		<managed-bean-scope>request</managed-bean-scope>
 	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>CarneBean</managed-bean-name>
+		<managed-bean-class>co.edu.unbosque.beans.CarneBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>JugueteBean</managed-bean-name>
+		<managed-bean-class>co.edu.unbosque.beans.JugueteBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>LacteoBean</managed-bean-name>
+		<managed-bean-class>co.edu.unbosque.beans.LacteoBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+	<managed-bean>
+		<managed-bean-name>RopaBean</managed-bean-name>
+		<managed-bean-class>co.edu.unbosque.beans.RopaBean</managed-bean-class>
+		<managed-bean-scope>request</managed-bean-scope>
+	</managed-bean>
+
 
 </faces-config>

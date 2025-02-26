@@ -18,7 +18,12 @@ public class UsuarioDAO implements CRUDOperation<UsuarioDTO, Usuario> {
 
 	@Override
 	public void delete(int positionToDelete) {
-		// TODO Auto-generated method stub
+		if (positionToDelete < 0 || positionToDelete >= listaUsuario.size()) {
+			return;
+		} else {
+			listaUsuario.remove(positionToDelete);
+			return;
+		}
 
 	}
 
@@ -69,8 +74,9 @@ public class UsuarioDAO implements CRUDOperation<UsuarioDTO, Usuario> {
 
 	@Override
 	public boolean update(UsuarioDTO previous, UsuarioDTO newData) {
-		Usuario found = find2(DataMapper.UsuarioDTOToUsuario(previous));
+		Usuario found = find(DataMapper.UsuarioDTOToUsuario(previous));
 		if (found != null) {
+			System.out.println("si");
 			listaUsuario.remove(found);
 			listaUsuario.add(DataMapper.UsuarioDTOToUsuario(newData));
 			writeFile();
@@ -106,8 +112,7 @@ public class UsuarioDAO implements CRUDOperation<UsuarioDTO, Usuario> {
 			for (String row : rows) {
 				String[] cols = row.split(";");
 				Usuario tempo = new Usuario();
-				int id = Integer.parseInt(cols[0]);
-				tempo.setId(id);
+				tempo.setId(cols[0]);
 				tempo.setContrasegna(cols[1]);
 				tempo.setNombre(cols[2]);
 				tempo.setApellido(cols[3]);
@@ -137,7 +142,7 @@ public class UsuarioDAO implements CRUDOperation<UsuarioDTO, Usuario> {
 		Usuario found = null;
 		if (!listaUsuario.isEmpty()) {
 			for (Usuario Usuario : listaUsuario) {
-				if (Usuario.getId() == toFind.getId()) {
+				if (Usuario.getId().equals(toFind.getId())) {
 					found = Usuario;
 					return found;
 				} else {

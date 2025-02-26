@@ -4,10 +4,9 @@
 body {
 	margin: 0;
 	height: 100vh;
-	background-image: url("FondoFruver.jpeg");
-	background-size: cover;
-	background-position: center;
-	background-repeat: no-repeat;
+	background-color: white;
+	overflow: hidden;
+
 }
 
 /* Contenedor del formulario */

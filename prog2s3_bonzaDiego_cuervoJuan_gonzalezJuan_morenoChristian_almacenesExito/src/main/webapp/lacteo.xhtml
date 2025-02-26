@@ -1,0 +1,215 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+	xmlns:h="http://xmlns.jcp.org/jsf/html"
+	xmlns:f="http://xmlns.jcp.org/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+
+<h:head>
+	<title>Lacteos</title>
+	<link
+		href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css"
+		rel="stylesheet"
+		integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH"
+		crossorigin="anonymous" />
+	<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
+		crossorigin="anonymous" />
+	<script src="https://kit.fontawesome.com/e5507d7bda.js"
+		crossorigin="anonymous"></script>
+	<link rel="stylesheet" href="tablaStyle.css" />
+	<script src="script.js"></script>
+	<link rel="icon" type="image/png" href="iconopag.ico" />
+</h:head>
+<h:body>
+	<nav class="navbar navbar-dark bg-dark position-absolute top-0 w-100">
+	<div class="container-fluid">
+		<span class="navbar-brand mb-0 h6">Control Lacteos</span>
+
+
+		<div class="dropdown">
+			<button class="btn btn-outline-light dropdown-toggle" type="button"
+				id="menuOpciones" data-bs-toggle="dropdown" aria-expanded="false">
+				Opciones</button>
+			<ul class="dropdown-menu dropdown-menu-end"
+				aria-labelledby="menuOpciones">
+				<li><h:form>
+						<p:commandLink value="Cambiar Contraseña"
+							styleClass="dropdown-item"
+							action="newPassword.xhtml?faces-redirect=true" />
+					</h:form></li>
+					<li><h:form>
+						<p:commandLink value="Menú"
+							styleClass="dropdown-item "
+							action="menu.xhtml?faces-redirect=true" ajax="false"
+							immediate="true" />
+					</h:form></li>
+				<li><h:form>
+						<p:commandLink value="Cerrar Sesión"
+							styleClass="dropdown-item text-danger"
+							action="index.xhtml?faces-redirect=true" ajax="false"
+							immediate="true" />
+					</h:form></li>
+			</ul>
+		</div>
+	</div>
+	</nav>
+	<h1>#{TableBean.products}</h1>
+	<div class="card crud-demo">
+		<h:form id="form">
+			<p:growl id="messages" showDetail="true" />
+
+			<p:toolbar>
+				<p:toolbarGroup>
+					<p:commandButton value="Nuevo" icon="pi pi-plus"
+						action="#{LacteoBean.openNew}"
+						update=":dialogs:manage-product-content"
+						oncomplete="PF('manageProductDialog').show()"
+						styleClass="ui-button-success" style="margin-right: .5rem">
+						<p:resetInput target=":dialogs:manage-product-content" />
+					</p:commandButton>
+
+				</p:toolbarGroup>
+
+			</p:toolbar>
+
+			<p:dataTable id="dt-products" widgetVar="dtProducts" var="product"
+				value="#{LacteoBean.lacteo}" reflow="true"
+				styleClass="products-table" rowKey="#{product.id}" paginator="true"
+				rows="10" selectionRowMode="add" paginatorPosition="bottom">
+				<f:facet name="header">
+					<div class="products-table-header">
+						<span style="font-weight: bold">PRODUCTOS</span> <span
+							class="filter-container ui-input-icon-left"> <i
+							class="pi pi-search"></i> <p:inputText id="globalFilter"
+								onkeyup="PF('dtProducts').filter()" placeholder="Buscar" />
+						</span>
+					</div>
+				</f:facet>
+
+				<p:ajax event="rowSelect" />
+				<p:ajax event="rowUnselect" />
+				<p:ajax event="rowSelectCheckbox" />
+				<p:ajax event="rowUnselectCheckbox" />
+				<p:ajax event="toggleSelect" />
+
+				<p:column selectionMode="multiple" exportable="false"></p:column>
+
+				<p:column headerText="Codigo" sortBy="#{product.code}"
+					filterBy="#{product.code}">
+					<h:outputText value="#{product.code}" />
+				</p:column>
+				<p:column headerText="Nombre" sortBy="#{product.name}"
+					filterBy="#{product.name}">
+					<h:outputText value="#{product.name}" />
+				</p:column>
+				<p:column headerText="Precio" sortBy="#{product.price}">
+					<h:outputText value="#{product.price}" style="font-weight: 700">
+						<f:convertNumber currencySymbol="$" type="currency" />
+					</h:outputText>
+				</p:column>
+				<p:column headerText="Categoria" sortBy="#{product.category}"
+					filterBy="#{product.category}">
+					<h:outputText value="#{product.category}" />
+				</p:column>
+				<p:column headerText="Estado" sortBy="#{product.inventoryStatus}"
+					filterBy="#{product.inventoryStatus}">
+					<h:outputText value="#{product.inventoryStatus.text}" />
+				</p:column>
+				<p:column exportable="false" ariaHeaderText="Actions">
+					<p:commandButton icon="pi pi-pencil"
+						update=":dialogs:manage-product-content"
+						oncomplete="PF('manageProductDialog').show()"
+						styleClass="edit-button rounded-button ui-button-success"
+						process="@this">
+						<f:setPropertyActionListener value="#{product}"
+							target="#{LacteoBean.lacteoDTO}" />
+						<p:resetInput target=":dialogs:manage-product-content" />
+					</p:commandButton>
+					<p:commandButton class="ui-button-warning rounded-button"
+						icon="pi pi-trash" process="@this"
+						oncomplete="PF('deleteProductDialog').show()">
+						<f:setPropertyActionListener value="#{product}"
+							target="#{LacteoBean.lacteoDTO}" />
+					</p:commandButton>
+				</p:column>
+
+			</p:dataTable>
+		</h:form>
+
+		<h:form id="dialogs">
+			<p:dialog header="Detalles del producto" showEffect="fade"
+				modal="true" widgetVar="manageProductDialog" responsive="true">
+				<p:outputPanel id="manage-product-content" class="ui-fluid">
+					<p:outputPanel>
+
+						<div class="field">
+							<p:outputLabel for="name">Nombre</p:outputLabel>
+							<p:inputText id="name" value="#{LacteoBean.name}" required="true" />
+						</div>
+						<div class="field">
+							<p:outputLabel for="description">Descripción</p:outputLabel>
+							<p:inputTextarea id="description"
+								value="#{LacteoBean.description}" />
+						</div>
+						<div class="field">
+							<p:outputLabel for="category">Categoria</p:outputLabel>
+							<p:selectOneRadio id="category" value="#{LacteoBean.category}"
+								layout="responsive" columns="2">
+								<f:selectItem itemLabel="Leche" itemValue="Leche" />
+								<f:selectItem itemLabel="Queso" itemValue="Queso" />
+								<f:selectItem itemLabel="Yogurt" itemValue="Yogurt" />
+								<f:selectItem itemLabel="Cuajada" itemValue="Cuajada" />
+							</p:selectOneRadio>
+						</div>
+						<div class="formgrid grid">
+							<div class="field col">
+								<p:outputLabel for="price">Precio</p:outputLabel>
+								<p:inputNumber id="price" value="#{LacteoBean.price}"
+									symbol=" COP" symbolPosition="s" decimalSeparator="."
+									thousandSeparator="," />
+							</div>
+							<div class="field col">
+								<p:outputLabel for="quantity">Cantidad</p:outputLabel>
+								<p:spinner id="quantity" min="0" value="#{LacteoBean.quantity}" />
+							</div>
+						</div>
+					</p:outputPanel>
+				</p:outputPanel>
+
+				<f:facet name="footer">
+					<p:commandButton value="Guardar" icon="pi pi-check"
+						action="#{LacteoBean.guardar}" update=":form:dt-products"
+						onclick="PF('manageProductDialog').hide()"
+						process="manage-product-content @this" />
+					<p:commandButton value="Cancelar" icon="pi pi-times"
+						onclick="PF('manageProductDialog').hide()"
+						class="ui-button-secondary" type="button" />
+				</f:facet>
+			</p:dialog>
+
+			<p:confirmDialog widgetVar="deleteProductDialog" showEffect="fade"
+				width="300" message="Desea eliminar el producto?" header="Confirmar"
+				severity="warn">
+				<p:commandButton value="Si" icon="pi pi-check"
+					actionListener="#{LacteoBean.eliminar}" process="@this"
+					oncomplete="PF('deleteProductDialog').hide()" />
+				<p:commandButton value="No" type="button"
+					styleClass="ui-button-secondary" icon="pi pi-times"
+					onclick="PF('deleteProductDialog').hide()" />
+			</p:confirmDialog>
+
+			<p:confirmDialog global="true" showEffect="fade" width="300">
+				<p:commandButton value="Si" type="button"
+					styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+				<p:commandButton value="No" type="button"
+					styleClass="ui-confirmdialog-no ui-button-secondary"
+					icon="pi pi-times" />
+			</p:confirmDialog>
+		</h:form>
+	</div>
+</h:body>
+</html>
