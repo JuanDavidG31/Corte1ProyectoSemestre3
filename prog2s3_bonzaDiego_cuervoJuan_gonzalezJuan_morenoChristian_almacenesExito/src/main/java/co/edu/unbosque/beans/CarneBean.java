@@ -47,6 +47,9 @@ public class CarneBean implements Serializable {
 
 	@PostConstruct
 	public void init() {
+		
+		
+		
 		System.out.println("Iniciando CarneBean...");
 
 		carne = carneDao.getAll();
@@ -217,6 +220,14 @@ public class CarneBean implements Serializable {
 
 			carneDTO = null;
 		}
+	}
+	
+	public void mostrar() {
+		this.name = carneDTO.getName();
+		this.description = carneDTO.getDescription();
+		this.category = carneDTO.getCategory();
+		this.price = carneDTO.getPrice();
+		this.quantity = carneDTO.getQuantity();
 	}
 
 	public void actualizar() {

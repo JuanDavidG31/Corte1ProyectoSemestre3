@@ -210,12 +210,12 @@ public class RopaBean implements Serializable {
 		this.price = 0;
 		this.quantity = 0;
 	}
-	
+
 	public void actualizar() {
 
 		if (ropaDTO != null) {
-			RopaDTO ropaActualizada = new RopaDTO(id, ropaDTO.getCode(), name, description, image, price,
-					category, quantity, iStatus(quantity), rating, null);
+			RopaDTO ropaActualizada = new RopaDTO(id, ropaDTO.getCode(), name, description, image, price, category,
+					quantity, iStatus(quantity), rating, null);
 			if (ropaDao.update(ropaDTO, ropaActualizada)) {
 				System.out.println("si");
 			} else {
@@ -246,12 +246,20 @@ public class RopaBean implements Serializable {
 			ropaDTO = null;
 		}
 	}
-	
+
 	public String createCode() {
 
 		String i = UUID.randomUUID().toString().replace("-", "").substring(0, 8);
 
 		return i;
+	}
+
+	public void mostrar() {
+		this.name = ropaDTO.getName();
+		this.description = ropaDTO.getDescription();
+		this.category = ropaDTO.getCategory();
+		this.price = ropaDTO.getPrice();
+		this.quantity = ropaDTO.getQuantity();
 	}
 
 	public InventoryStatus iStatus(int cant) {

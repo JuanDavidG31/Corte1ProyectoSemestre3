@@ -255,6 +255,14 @@ public class LacteoBean implements Serializable {
 		return i;
 	}
 
+	public void mostrar() {
+		this.name = lacteoDTO.getName();
+		this.description = lacteoDTO.getDescription();
+		this.category = lacteoDTO.getCategory();
+		this.price = lacteoDTO.getPrice();
+		this.quantity = lacteoDTO.getQuantity();
+	}
+
 	public InventoryStatus iStatus(int cant) {
 
 		if (cant <= 0) {

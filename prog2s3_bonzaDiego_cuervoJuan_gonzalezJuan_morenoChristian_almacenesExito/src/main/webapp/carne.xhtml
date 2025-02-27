@@ -123,7 +123,7 @@
 					<h:outputText value="#{product.inventoryStatus.text}" />
 				</p:column>
 				<p:column exportable="false" ariaHeaderText="Actions">
-					<p:commandButton icon="pi pi-pencil"
+					<p:commandButton icon="pi pi-pencil" action="#{CarneBean.mostrar}"
 						update=":dialogs2:manageupdate-product-content"
 						oncomplete="PF('manageUpdateProductDialog').show()"
 						styleClass="edit-button rounded-button ui-button-success"
@@ -219,7 +219,7 @@
 					icon="pi pi-times" />
 			</p:confirmDialog>
 		</h:form>
-		
+
 		<h:form id="dialogs2">
 			<p:dialog header="Detalles del producto" showEffect="fade"
 				modal="true" widgetVar="manageUpdateProductDialog" responsive="true">
@@ -228,7 +228,8 @@
 
 						<div class="field">
 							<p:outputLabel for="name">Nombre</p:outputLabel>
-							<p:inputText id="name" value="#{CarneBean.name}" required="true" />
+							<p:inputText id="name" value="#{CarneBean.name}" required="true" >
+							</p:inputText>
 						</div>
 						<div class="field">
 							<p:outputLabel for="description">Descripción</p:outputLabel>

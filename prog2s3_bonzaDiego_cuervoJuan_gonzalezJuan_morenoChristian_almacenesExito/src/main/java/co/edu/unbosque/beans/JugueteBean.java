@@ -255,6 +255,13 @@ public class JugueteBean implements Serializable {
 
 		return i;
 	}
+	public void mostrar() {
+		this.name = jugueteDTO.getName();
+		this.description = jugueteDTO.getDescription();
+		this.category = jugueteDTO.getCategory();
+		this.price = jugueteDTO.getPrice();
+		this.quantity = jugueteDTO.getQuantity();
+	}
 
 	public InventoryStatus iStatus(int cant) {
 
