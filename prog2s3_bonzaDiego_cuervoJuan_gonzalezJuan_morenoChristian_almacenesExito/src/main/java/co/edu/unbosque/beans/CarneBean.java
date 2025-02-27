@@ -221,10 +221,11 @@ public class CarneBean implements Serializable {
 
 	public void actualizar() {
 
+	
 		if (carneDTO != null) {
-			CarneDTO carneActualizada = new CarneDTO(carneDTO.getId(), carneDTO.getCode(), carneDTO.getName(),
-					carneDTO.getDescription(), carneDTO.getImage(), carneDTO.getPrice(), carneDTO.getCategory(),
-					carneDTO.getQuantity(), carneDTO.getInventoryStatus(), carneDTO.getRating(), null);
+			CarneDTO carneActualizada = new CarneDTO(id, carneDTO.getCode(), name,
+					description, image, price, category,
+					quantity, iStatus(quantity), rating, null);
 			if (carneDao.update(carneDTO, carneActualizada)) {
 				System.out.println("si");
 			} else {
@@ -233,6 +234,11 @@ public class CarneBean implements Serializable {
 
 			carne = carneDao.getAll();
 		}
+		this.name = "";
+		this.description = "";
+		this.category = "";
+		this.price = 0;
+		this.quantity = 0;
 	}
 
 	public String createCode() {
