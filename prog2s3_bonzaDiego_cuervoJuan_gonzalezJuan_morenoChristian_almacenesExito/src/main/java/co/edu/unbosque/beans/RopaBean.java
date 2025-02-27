@@ -9,6 +9,7 @@ import org.primefaces.PrimeFaces;
 
 import co.edu.unbosque.model.RopaDTO;
 import co.edu.unbosque.model.InventoryStatus;
+import co.edu.unbosque.model.LacteoDTO;
 import co.edu.unbosque.model.Product;
 import co.edu.unbosque.model.persistence.RopaDAO;
 import co.edu.unbosque.model.persistence.RopaDAO;
@@ -203,6 +204,26 @@ public class RopaBean implements Serializable {
 				iStatus(quantity), rating, null);
 		ropaDao.add(nuevoProducto);
 		ropa = ropaDao.getAll();
+		this.name = "";
+		this.description = "";
+		this.category = "";
+		this.price = 0;
+		this.quantity = 0;
+	}
+	
+	public void actualizar() {
+
+		if (ropaDTO != null) {
+			RopaDTO ropaActualizada = new RopaDTO(id, ropaDTO.getCode(), name, description, image, price,
+					category, quantity, iStatus(quantity), rating, null);
+			if (ropaDao.update(ropaDTO, ropaActualizada)) {
+				System.out.println("si");
+			} else {
+				System.out.println("no");
+			}
+
+			ropa = ropaDao.getAll();
+		}
 		this.name = "";
 		this.description = "";
 		this.category = "";

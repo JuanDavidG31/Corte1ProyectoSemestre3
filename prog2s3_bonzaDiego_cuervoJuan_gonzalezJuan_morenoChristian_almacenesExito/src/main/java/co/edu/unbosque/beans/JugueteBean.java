@@ -8,6 +8,7 @@ import java.util.UUID;
 import org.primefaces.PrimeFaces;
 
 import co.edu.unbosque.model.JugueteDTO;
+import co.edu.unbosque.model.CarneDTO;
 import co.edu.unbosque.model.InventoryStatus;
 import co.edu.unbosque.model.Product;
 import co.edu.unbosque.model.persistence.JugueteDAO;
@@ -203,6 +204,28 @@ public class JugueteBean implements Serializable {
 				iStatus(quantity), rating, null);
 		jugueteDao.add(nuevoProducto);
 		juguete = jugueteDao.getAll();
+		this.name = "";
+		this.description = "";
+		this.category = "";
+		this.price = 0;
+		this.quantity = 0;
+	}
+	
+	public void actualizar() {
+
+		
+		if (jugueteDTO != null) {
+			JugueteDTO jugueteActualizada = new JugueteDTO(id, jugueteDTO.getCode(), name,
+					description, image, price, category,
+					quantity, iStatus(quantity), rating, null);
+			if (jugueteDao.update(jugueteDTO, jugueteActualizada)) {
+				System.out.println("si");
+			} else {
+				System.out.println("no");
+			}
+
+			juguete = jugueteDao.getAll();
+		}
 		this.name = "";
 		this.description = "";
 		this.category = "";
