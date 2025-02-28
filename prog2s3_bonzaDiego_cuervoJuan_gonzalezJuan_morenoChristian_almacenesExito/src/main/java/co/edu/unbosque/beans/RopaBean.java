@@ -9,6 +9,7 @@ import org.primefaces.PrimeFaces;
 
 import co.edu.unbosque.model.RopaDTO;
 import co.edu.unbosque.model.InventoryStatus;
+import co.edu.unbosque.model.LacteoDTO;
 import co.edu.unbosque.model.Product;
 import co.edu.unbosque.model.persistence.RopaDAO;
 import co.edu.unbosque.model.persistence.RopaDAO;
@@ -317,9 +318,32 @@ public class RopaBean implements Serializable {
 		this.price = 0;
 		this.quantity = 0;
 	}
+
 	/**
 	 * Crea un nuevo objeto RopaDTO vacío.
 	 */
+
+	public void actualizar() {
+
+		if (ropaDTO != null) {
+			RopaDTO ropaActualizada = new RopaDTO(id, ropaDTO.getCode(), name, description, image, price, category,
+					quantity, iStatus(quantity), rating, null);
+			if (ropaDao.update(ropaDTO, ropaActualizada)) {
+				System.out.println("si");
+			} else {
+				System.out.println("no");
+			}
+
+			ropa = ropaDao.getAll();
+		}
+		this.name = "";
+		this.description = "";
+		this.category = "";
+		this.price = 0;
+		this.quantity = 0;
+	}
+
+
 	public void openNew() {
 		ropaDTO = new RopaDTO();
 	}
@@ -337,21 +361,36 @@ public class RopaBean implements Serializable {
 			ropaDTO = null;
 		}
 	}
+
 	/**
 	 * Genera un código único para el producto.
 	 * @return un código único de 8 caracteres.
 	 */
+
+
 	public String createCode() {
 
 		String i = UUID.randomUUID().toString().replace("-", "").substring(0, 8);
 
 		return i;
 	}
+
 	/**
 	 * Determina el estado del inventario según la cantidad disponible.
 	 * @param cant cantidad del producto en inventario.
 	 * @return el estado del inventario correspondiente.
 	 */
+
+
+	public void mostrar() {
+		this.name = ropaDTO.getName();
+		this.description = ropaDTO.getDescription();
+		this.category = ropaDTO.getCategory();
+		this.price = ropaDTO.getPrice();
+		this.quantity = ropaDTO.getQuantity();
+	}
+
+
 	public InventoryStatus iStatus(int cant) {
 
 		if (cant <= 0) {

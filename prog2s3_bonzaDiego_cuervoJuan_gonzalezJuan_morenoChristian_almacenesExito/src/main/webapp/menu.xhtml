@@ -20,17 +20,20 @@
 		crossorigin="anonymous" />
 	<script src="https://kit.fontawesome.com/e5507d7bda.js"
 		crossorigin="anonymous"></script>
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+
 	<link rel="stylesheet" href="menuStyle.css" />
 	<script src="script.js"></script>
 	<link rel="icon" type="image/png" href="iconopag.ico" />
 </h:head>
 <h:body>
-	
+
 	<nav class="navbar navbar-dark bg-dark position-absolute top-0 w-100">
 	<div class="container-fluid">
 		<span class="navbar-brand mb-0 h6">Menú Principal</span>
 
-	
+
 		<div class="dropdown">
 			<button class="btn btn-outline-light dropdown-toggle" type="button"
 				id="menuOpciones" data-bs-toggle="dropdown" aria-expanded="false">
@@ -53,7 +56,8 @@
 	</div>
 	</nav>
 
-	<div id="box-formulario">
+	<div id="box-formulario"
+		class="animate__animated animate__bounceInLeft">
 		<div class="card">
 			<h:form>
 				<p:messages>
@@ -66,13 +70,17 @@
 
 				<!-- Contenedor para los botones -->
 				<div class="botones-wrapper">
-					<p:commandButton value="Menú Carnes" icon=" fa-solid fa-drumstick-bite " class="boton-crear"
-						action="carne.xhtml?faces-redirect=true" ajax="false"  />
-					<p:commandButton value="Menú Lácteos" icon="fa-solid fa-cheese" class="boton-crear"
-						action="lacteo.xhtml?faces-redirect=true" ajax="false" />
-					<p:commandButton value="Menú Ropa" icon="fa-solid fa-shirt" class="boton-crear"
-						action="ropa.xhtml?faces-redirect=true" ajax="false" />
-					<p:commandButton value="Menú Juguetes" icon="fa-solid fa-puzzle-piece" class="boton-crear"
+					<p:commandButton value="Menú Carnes"
+						icon=" fa-solid fa-drumstick-bite " class="boton-crear"
+						action="carne.xhtml?faces-redirect=true" ajax="false" />
+					<p:commandButton value="Menú Lácteos" icon="fa-solid fa-cheese"
+						class="boton-crear" action="lacteo.xhtml?faces-redirect=true"
+						ajax="false" />
+					<p:commandButton value="Menú Ropa" icon="fa-solid fa-shirt"
+						class="boton-crear" action="ropa.xhtml?faces-redirect=true"
+						ajax="false" />
+					<p:commandButton value="Menú Juguetes"
+						icon="fa-solid fa-puzzle-piece" class="boton-crear"
 						action="juguete.xhtml?faces-redirect=true" ajax="false" />
 
 
@@ -81,6 +89,8 @@
 			</h:form>
 		</div>
 	</div>
+	
+
 
 </h:body>
 

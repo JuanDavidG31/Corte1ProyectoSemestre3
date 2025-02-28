@@ -69,7 +69,7 @@
 						update=":dialogs:manage-product-content"
 						oncomplete="PF('manageProductDialog').show()"
 						styleClass="ui-button-success" style="margin-right: .5rem">
-						<p:resetInput target=":dialogs:manage-product-content" />
+						<p:resetInput target=":dialogs:manageupdate-product-content" />
 					</p:commandButton>
 					
 				</p:toolbarGroup>
@@ -122,14 +122,14 @@
 					<h:outputText value="#{product.inventoryStatus.text}" />
 				</p:column>
 				<p:column exportable="false" ariaHeaderText="Actions">
-					<p:commandButton icon="pi pi-pencil"
-						update=":dialogs:manage-product-content"
-						oncomplete="PF('manageProductDialog').show()"
+					<p:commandButton icon="pi pi-pencil"  action="#{JugueteBean.mostrar}"
+						update=":dialogs2:manageupdate-product-content"
+						oncomplete="PF('manageUpdateProductDialog').show()"
 						styleClass="edit-button rounded-button ui-button-success"
 						process="@this">
 						<f:setPropertyActionListener value="#{product}"
 							target="#{JugueteBean.jugueteDTO}" />
-						<p:resetInput target=":dialogs:manage-product-content" />
+						<p:resetInput target=":dialogs2:manageupdate-product-content" />
 					</p:commandButton>
 					<p:commandButton class="ui-button-warning rounded-button"
 						icon="pi pi-trash" process="@this" action="#{JugueteBean.eliminar}"
@@ -217,6 +217,61 @@
 					styleClass="ui-confirmdialog-no ui-button-secondary"
 					icon="pi pi-times" />
 			</p:confirmDialog>
+		</h:form>
+		
+		<h:form id="dialogs2">
+			<p:dialog header="Detalles del producto" showEffect="fade"
+				modal="true" widgetVar="manageUpdateProductDialog" responsive="true">
+				<p:outputPanel id="manageupdate-product-content" class="ui-fluid">
+					<p:outputPanel>
+
+						<div class="field">
+							<p:outputLabel for="name">Nombre</p:outputLabel>
+							<p:inputText id="name" value="#{JugueteBean.name}" required="true" />
+						</div>
+						<div class="field">
+							<p:outputLabel for="description">Descripción</p:outputLabel>
+							<p:inputTextarea id="description"
+								value="#{JugueteBean.description}" />
+						</div>
+						<div class="field">
+							<p:outputLabel for="category">Categoria</p:outputLabel>
+							<p:selectOneRadio id="category" value="#{JugueteBean.category}"
+								layout="responsive" columns="2">
+								<f:selectItem itemLabel="Juegos de mesa" itemValue="Juegos de mesa" />
+								<f:selectItem itemLabel="Juegos cooperativos" itemValue="Juegos cooperativos" />
+								<f:selectItem itemLabel="Juguetes de construcción"
+									itemValue="Juguetes de construcción" />
+								<f:selectItem itemLabel="Puzzles y rompecabezas" itemValue="Puzzles y rompecabezas" />
+								<f:selectItem itemLabel="Balones Etc" itemValue="Balones Etc" />
+							</p:selectOneRadio>
+						</div>
+						<div class="formgrid grid">
+							<div class="field col">
+								<p:outputLabel for="price">Precio</p:outputLabel>
+								<p:inputNumber id="price" value="#{JugueteBean.price}"
+									symbol=" COP" symbolPosition="s" decimalSeparator="."
+									thousandSeparator="," />
+							</div>
+							<div class="field col">
+								<p:outputLabel for="quantity">Cantidad</p:outputLabel>
+								<p:spinner id="quantity" min="0" value="#{JugueteBean.quantity}" />
+							</div>
+						</div>
+					</p:outputPanel>
+				</p:outputPanel>
+
+				<f:facet name="footer">
+					<p:commandButton value="Actualizar" icon="pi pi-check"
+						action="#{JugueteBean.actualizar}" update=":form:dt-products"
+						onclick="PF('manageUpdateProductDialog').hide()"
+						process="manageupdate-product-content @this" />
+					<p:commandButton value="Cancelar" icon="pi pi-times"
+						onclick="PF('manageUpdateProductDialog').hide()"
+						class="ui-button-secondary" type="button" />
+				</f:facet>
+			</p:dialog>
+
 		</h:form>
 	</div>
 </h:body>

@@ -8,6 +8,7 @@ import java.util.UUID;
 import org.primefaces.PrimeFaces;
 
 import co.edu.unbosque.model.JugueteDTO;
+import co.edu.unbosque.model.CarneDTO;
 import co.edu.unbosque.model.InventoryStatus;
 import co.edu.unbosque.model.Product;
 import co.edu.unbosque.model.persistence.JugueteDAO;
@@ -317,6 +318,28 @@ public class JugueteBean implements Serializable {
 		this.price = 0;
 		this.quantity = 0;
 	}
+	
+	public void actualizar() {
+
+		
+		if (jugueteDTO != null) {
+			JugueteDTO jugueteActualizada = new JugueteDTO(id, jugueteDTO.getCode(), name,
+					description, image, price, category,
+					quantity, iStatus(quantity), rating, null);
+			if (jugueteDao.update(jugueteDTO, jugueteActualizada)) {
+				System.out.println("si");
+			} else {
+				System.out.println("no");
+			}
+
+			juguete = jugueteDao.getAll();
+		}
+		this.name = "";
+		this.description = "";
+		this.category = "";
+		this.price = 0;
+		this.quantity = 0;
+	}
 
 	public void openNew() {
 		jugueteDTO = new JugueteDTO();
@@ -339,6 +362,13 @@ public class JugueteBean implements Serializable {
 		String i = UUID.randomUUID().toString().replace("-", "").substring(0, 8);
 
 		return i;
+	}
+	public void mostrar() {
+		this.name = jugueteDTO.getName();
+		this.description = jugueteDTO.getDescription();
+		this.category = jugueteDTO.getCategory();
+		this.price = jugueteDTO.getPrice();
+		this.quantity = jugueteDTO.getQuantity();
 	}
 
 	public InventoryStatus iStatus(int cant) {

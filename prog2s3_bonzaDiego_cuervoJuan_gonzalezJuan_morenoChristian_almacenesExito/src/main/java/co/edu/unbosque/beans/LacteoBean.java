@@ -9,6 +9,7 @@ import org.primefaces.PrimeFaces;
 
 import co.edu.unbosque.model.LacteoDTO;
 import co.edu.unbosque.model.InventoryStatus;
+import co.edu.unbosque.model.JugueteDTO;
 import co.edu.unbosque.model.Product;
 import co.edu.unbosque.model.persistence.LacteoDAO;
 import co.edu.unbosque.model.persistence.LacteoDAO;
@@ -90,7 +91,8 @@ public class LacteoBean implements Serializable {
      * @param lacteoDao DAO para la gestión de productos lácteos.
      */
 	public LacteoBean(int id, String code, String name, String description, String image, double price, String category,
-			int quantity, InventoryStatus inventoryStatus, int rating, ArrayList<LacteoDTO> lacteo, LacteoDAO lacteoDao) {
+			int quantity, InventoryStatus inventoryStatus, int rating, ArrayList<LacteoDTO> lacteo,
+			LacteoDAO lacteoDao) {
 		super();
 		this.id = id;
 		this.code = code;
@@ -324,9 +326,33 @@ public class LacteoBean implements Serializable {
 		this.price = 0;
 		this.quantity = 0;
 	}
+
 	/**
 	 * Inicializa un nuevo objeto LacteoDTO.
 	 */
+
+
+	public void actualizar() {
+
+		if (lacteoDTO != null) {
+			LacteoDTO lacteoActualizado = new LacteoDTO(id, lacteoDTO.getCode(), name, description, image, price,
+					category, quantity, iStatus(quantity), rating, null);
+			if (lacteoDao.update(lacteoDTO, lacteoActualizado)) {
+				System.out.println("si");
+			} else {
+				System.out.println("no");
+			}
+
+			lacteo = lacteoDao.getAll();
+		}
+		this.name = "";
+		this.description = "";
+		this.category = "";
+		this.price = 0;
+		this.quantity = 0;
+	}
+
+
 	public void openNew() {
 		lacteoDTO = new LacteoDTO();
 	}
@@ -344,23 +370,39 @@ public class LacteoBean implements Serializable {
 			lacteoDTO = null;
 		}
 	}
+
 	/**
 	 * Genera un código único para un producto lácteo.
 	 * 
 	 * @return Código generado aleatoriamente.
 	 */
+
+
+
 	public String createCode() {
 
 		String i = UUID.randomUUID().toString().replace("-", "").substring(0, 8);
 
 		return i;
 	}
+
 	/**
 	 * Determina el estado del inventario basado en la cantidad disponible.
 	 * 
 	 * @param cant Cantidad de productos en stock.
 	 * @return Estado del inventario correspondiente.
 	 */
+
+
+	public void mostrar() {
+		this.name = lacteoDTO.getName();
+		this.description = lacteoDTO.getDescription();
+		this.category = lacteoDTO.getCategory();
+		this.price = lacteoDTO.getPrice();
+		this.quantity = lacteoDTO.getQuantity();
+	}
+
+
 	public InventoryStatus iStatus(int cant) {
 
 		if (cant <= 0) {

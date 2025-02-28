@@ -18,6 +18,8 @@
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz"
 		crossorigin="anonymous" />
+	<link rel="stylesheet"
+		href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
 	<link rel="stylesheet" href="style.css" />
 
 	<link rel="stylesheet" href="userStyle.css" />
@@ -29,7 +31,8 @@
 </h:head>
 
 <h:body>
-	<div id="box-formulario">
+	<div id="box-formulario"
+		class="animate__animated animate__bounceInLeft">
 		<div class="card">
 			<h:form id="formulario1">
 
@@ -95,13 +98,13 @@
 
 
 				<div class="field" style="margin-bottom: 20px;">
-					<span> <p:selectOneMenu id="lazy" dynamic="true"
-							style="width: 100%;">
+					<span> <p:selectOneMenu value="#{UserBean.cargo}" id="lazy"
+							dynamic="true" style="width: 100%;">
 							<f:selectItem itemLabel="Seleccione un cargo" itemValue="0" />
 							<f:selectItem itemLabel="Administrador" itemValue="Administrador" />
 							<f:selectItem itemLabel="Cajero" itemValue="Cajero" />
 							<f:selectItem itemLabel="Empleado" itemValue="Empleado" />
-							<f:selectItems value="#{UserBean.cargo}" />
+							<f:selectItems />
 						</p:selectOneMenu>
 					</span>
 				</div>
@@ -109,7 +112,8 @@
 				<div class="field botones-container">
 
 					<p:commandButton action="#{UserBean.crear}" value="Guardar"
-						icon="fa-solid fa-floppy-disk" styleClass="boton-crear" update="formulario1" />
+						icon="fa-solid fa-floppy-disk" styleClass="boton-crear"
+						update="formulario1" />
 					<p:commandButton value="Inicio" icon="fa fa-home"
 						styleClass="boton-home" action="index.xhtml?faces-redirect=true"
 						immediate="true" />
