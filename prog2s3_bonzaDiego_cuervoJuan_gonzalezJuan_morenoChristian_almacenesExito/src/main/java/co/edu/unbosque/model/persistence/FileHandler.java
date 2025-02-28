@@ -10,7 +10,9 @@ import java.io.ObjectOutputStream;
 import java.io.PrintWriter;
 import java.util.Properties;
 import java.util.Scanner;
-
+/**
+ * Clase FileHandler para manejar operaciones de lectura y escritura de archivos.
+ */
 public class FileHandler {
 	private static Scanner sc;
 	private static PrintWriter pw;
@@ -24,7 +26,12 @@ public class FileHandler {
 
 	private static FileInputStream fis;
 	private static ObjectInputStream ois;
-
+	 /**
+     * Lee un archivo serializado y devuelve el objeto almacenado.
+     * 
+     * @param url Nombre del archivo.
+     * @return Objeto leído o null si hay un error.
+     */
 	public static Object readSerialized(String url) {
 		try {
 			archivo = new File(FOLDER_NAME + "/" + url);
@@ -49,7 +56,12 @@ public class FileHandler {
 		return null;
 
 	}
-
+	 /**
+     * Escribe un objeto en un archivo serializado.
+     * 
+     * @param url     Nombre del archivo.
+     * @param content Objeto a almacenar.
+     */
 	public static void writerSerialized(String url, Object content) {
 		try {
 			archivo = new File(FOLDER_NAME + "/" + url);
@@ -66,7 +78,9 @@ public class FileHandler {
 			System.out.println("Error en la escritura del archivo");
 		}
 	}
-
+	 /**
+     * Verifica y crea las carpetas necesarias para almacenar los archivos.
+     */
 	public static void checkFolder() {
 		archivo = new File(FOLDER_NAME);
 		if (archivo.exists() && archivo.isDirectory()) {
@@ -83,7 +97,12 @@ public class FileHandler {
 		}
 
 	}
-
+	 /**
+     * Escribe contenido en un archivo de texto.
+     * 
+     * @param url     Nombre del archivo.
+     * @param content Contenido a escribir.
+     */
 	public static void writeFile(String url, String content) {
 		try {
 			archivo = new File(FOLDER_NAME + "/" + url);
@@ -100,7 +119,12 @@ public class FileHandler {
 			System.out.println("Error en la correcion del archivo(Texto plano)");
 		}
 	}
-
+	/**
+     * Lee el contenido de un archivo de texto.
+     * 
+     * @param url Nombre del archivo.
+     * @return Contenido del archivo en formato String.
+     */
 	public static String readFile(String url) {
 		try {
 			archivo = new File(FOLDER_NAME + "/" + url);
@@ -122,7 +146,12 @@ public class FileHandler {
 		}
 		return null;
 	}
-
+	 /**
+     * Carga un archivo de propiedades.
+     * 
+     * @param url Nombre del archivo de propiedades.
+     * @return Objeto Properties con los valores cargados.
+     */
 	public static Properties loadProperties(String url) {
 		Properties prop = null;
 		prop = new Properties();
