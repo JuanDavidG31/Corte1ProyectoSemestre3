@@ -6,23 +6,36 @@ import java.util.UUID;
 
 import co.edu.unbosque.model.Carne;
 import co.edu.unbosque.model.CarneDTO;
-
+/**
+ * Clase que maneja las operaciones CRUD para los objetos de tipo Carne.
+ */
 public class CarneDAO implements CRUDOperation<CarneDTO, Carne> {
 
 	private ArrayList<Carne> listaCarne;
 	private final String FILE_NAME = "carne.csv";
 	private final String SERIAL_NAME = "carne.dat";
-
+	/**
+     * Constructor que inicializa la lista de carnes cargando los datos serializados.
+     */
 	public CarneDAO() {
 		FileHandler.checkFolder();
 		readSerizalized();
 
 	}
-
+	/**
+     * Establece la lista de carnes.
+     * @param listaCarne Lista de objetos Carne.
+     */
 	public void setListaCarne(ArrayList<Carne> listaCarne) {
 		this.listaCarne = listaCarne;
 	}
-
+	/**
+     * Obtiene una lista de carnes con el tamaño especificado.
+     * Si el tamaño solicitado es mayor al disponible, selecciona aleatoriamente elementos.
+     * 
+     * @param size Tamaño de la lista deseada.
+     * @return Lista de carnes con la cantidad solicitada o la totalidad si es menor.
+     */
 	public ArrayList<Carne> getListaCarne(int size) {
 
 		if (size > listaCarne.size()) {
@@ -42,7 +55,10 @@ public class CarneDAO implements CRUDOperation<CarneDTO, Carne> {
 		}
 
 	}
-
+	/**
+     * Elimina un elemento de la lista según su posición.
+     * @param positionToDelete Índice del elemento a eliminar.
+     */
 	@Override
 	public void delete(int positionToDelete) {
 		if (positionToDelete < 0 || positionToDelete >= listaCarne.size()) {
@@ -53,7 +69,10 @@ public class CarneDAO implements CRUDOperation<CarneDTO, Carne> {
 		}
 
 	}
-
+	/**
+     * Muestra todos los elementos de la lista de carnes.
+     * @return Cadena con la representación de todas las carnes o un mensaje si la lista está vacía.
+     */
 	@Override
 	public String showAll() {
 		String rta = "";
@@ -66,7 +85,10 @@ public class CarneDAO implements CRUDOperation<CarneDTO, Carne> {
 			return rta;
 		}
 	}
-
+	/**
+     * Obtiene una lista de todas las carnes en formato DTO.
+     * @return Lista de objetos CarneDTO.
+     */
 	@Override
 	public ArrayList<CarneDTO> getAll() {
 		return DataMapper.listaCarneToListaCarneDTO(listaCarne);
@@ -82,7 +104,11 @@ public class CarneDAO implements CRUDOperation<CarneDTO, Carne> {
 		return true;
 
 	}
-
+	 /**
+     * Agrega un nuevo objeto Carne a la lista y lo guarda en archivo.
+     * @param newData Objeto CarneDTO a agregar.
+     * @return true si la operación fue exitosa.
+     */
 	@Override
 	public boolean delete(CarneDTO toDelete) {
 		Carne carneToRemove = find2(DataMapper.CarneDTOToCarne(toDelete));
@@ -94,7 +120,11 @@ public class CarneDAO implements CRUDOperation<CarneDTO, Carne> {
 		}
 		return false;
 	}
-
+	/**
+     * Elimina un objeto Carne de la lista basado en su coincidencia con otro objeto.
+     * @param toDelete Objeto CarneDTO a eliminar.
+     * @return true si la eliminación fue exitosa, false si no se encontró.
+     */
 	@Override
 	public boolean update(CarneDTO previous, CarneDTO newData) {
 		Carne found = find2(DataMapper.CarneDTOToCarne(previous));
@@ -108,7 +138,9 @@ public class CarneDAO implements CRUDOperation<CarneDTO, Carne> {
 			return false;
 		}
 	}
-
+	/**
+	 * Escribe los datos de la lista de carnes en un archivo CSV.
+	 */
 	public void writeFile() {
 		String content = "";
 		for (Carne m : listaCarne) {
@@ -127,7 +159,9 @@ public class CarneDAO implements CRUDOperation<CarneDTO, Carne> {
 		}
 		FileHandler.writeFile(FILE_NAME, content);
 	}
-
+	/**
+	 * Lee los datos desde un archivo CSV y los carga en la lista de carnes.
+	 */
 	public void readFile() {
 		String content = FileHandler.readFile(FILE_NAME);
 
@@ -153,11 +187,15 @@ public class CarneDAO implements CRUDOperation<CarneDTO, Carne> {
 		}
 
 	}
-
+	/**
+	 * Escribe los datos de la lista de carnes en un archivo serializado.
+	 */
 	public void writeSerialized() {
 		FileHandler.writerSerialized(SERIAL_NAME, listaCarne);
 	}
-
+	/**
+	 * Lee los datos desde un archivo serializado y los carga en la lista de carnes.
+	 */
 	public void readSerizalized() {
 		Object content = FileHandler.readSerialized(SERIAL_NAME);
 		if (content == null) {
@@ -166,7 +204,12 @@ public class CarneDAO implements CRUDOperation<CarneDTO, Carne> {
 			listaCarne = (ArrayList<Carne>) content;
 		}
 	}
-
+	/**
+	 * Busca una carne en la lista por ID.
+	 * 
+	 * @param toFind Objeto Carne con el ID a buscar.
+	 * @return Carne encontrada o null si no existe.
+	 */
 	@Override
 	public Carne find(Carne toFind) {
 		Carne found = null;
@@ -184,7 +227,12 @@ public class CarneDAO implements CRUDOperation<CarneDTO, Carne> {
 		}
 		return null;
 	}
-
+	/**
+	 * Busca una carne en la lista por código.
+	 * 
+	 * @param toFind Objeto Carne con el código a buscar.
+	 * @return Carne encontrada o null si no existe.
+	 */
 	@Override
 	public Carne find2(Carne toFind) {
 		Carne found = null;

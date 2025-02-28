@@ -16,23 +16,38 @@ import jakarta.inject.Named;
 
 @Named
 @ApplicationScoped
-
+/**
+ * Clase que implementa las operaciones CRUD para la entidad Ropa.
+ */
 public class RopaDAO implements CRUDOperation<RopaDTO, Ropa> {
 
 	private ArrayList<Ropa> listaRopa;
 	private final String FILE_NAME = "ropa.csv";
 	private final String SERIAL_NAME = "ropa.dat";
-
+	/**
+     * Constructor de la clase RopaDAO.
+     * Inicializa la lista de ropa y carga los datos serializados si existen.
+     */
 	public RopaDAO() {
 		FileHandler.checkFolder();
 		readSerizalized();
 
 	}
-
+	/**
+     * Establece la lista de ropa.
+     * @param listaRopa Lista de objetos Ropa.
+     */
 	public void setListaRopa(ArrayList<Ropa> listaRopa) {
 		this.listaRopa = listaRopa;
 	}
-
+	/**
+     * Obtiene una lista de ropa con un tamaño específico.
+     * Si el tamaño es mayor a la cantidad de elementos disponibles, 
+     * se devuelven elementos aleatorios.
+     * 
+     * @param size Cantidad de elementos deseados.
+     * @return Lista de objetos Ropa.
+     */
 	public ArrayList<Ropa> getListaRopa(int size) {
 
 		if (size > listaRopa.size()) {
@@ -52,7 +67,13 @@ public class RopaDAO implements CRUDOperation<RopaDTO, Ropa> {
 		}
 
 	}
-
+	/**
+     * Obtiene una lista clonada de ropa con un tamaño específico.
+     * Cada elemento clonado recibe un nuevo código único.
+     * 
+     * @param size Cantidad de elementos deseados.
+     * @return Lista clonada de objetos Ropa.
+     */
 	public ArrayList<Ropa> getClonedRopa(int size) {
 		ArrayList<Ropa> results = new ArrayList<>();
 		ArrayList<Ropa> originals = getListaRopa(size);
@@ -66,7 +87,11 @@ public class RopaDAO implements CRUDOperation<RopaDTO, Ropa> {
 
 		return results;
 	}
-
+	/**
+     * Elimina un elemento de la lista de ropa según su posición.
+     * 
+     * @param positionToDelete Índice del elemento a eliminar.
+     */
 	@Override
 	public void delete(int positionToDelete) {
 		if (positionToDelete < 0 || positionToDelete >= listaRopa.size()) {
@@ -77,7 +102,11 @@ public class RopaDAO implements CRUDOperation<RopaDTO, Ropa> {
 		}
 
 	}
-
+	/**
+     * Muestra todos los elementos de la lista de ropa.
+     * 
+     * @return Una cadena con la información de todas las prendas de ropa.
+     */
 	@Override
 	public String showAll() {
 		String rta = "";
@@ -90,13 +119,22 @@ public class RopaDAO implements CRUDOperation<RopaDTO, Ropa> {
 			return rta;
 		}
 	}
-
+	/**
+     * Obtiene la lista de ropa en formato DTO.
+     * 
+     * @return Lista de objetos RopaDTO.
+     */
 	@Override
 	public ArrayList<RopaDTO> getAll() {
 		return DataMapper.listaRopaToListaRopaDTO(listaRopa);
 
 	}
-
+	/**
+     * Agrega una nueva prenda de ropa a la lista.
+     * 
+     * @param newData Objeto RopaDTO con los datos de la nueva prenda.
+     * @return true si se agregó correctamente.
+     */
 	@Override
 	public boolean add(RopaDTO newData) {
 
@@ -106,7 +144,12 @@ public class RopaDAO implements CRUDOperation<RopaDTO, Ropa> {
 		return true;
 
 	}
-
+	/**
+     * Elimina una prenda de ropa de la lista.
+     * 
+     * @param toDelete Objeto RopaDTO que representa la prenda a eliminar.
+     * @return true si se eliminó correctamente, false si no se encontró.
+     */
 	@Override
 	public boolean delete(RopaDTO toDelete) {
 		Ropa found = find2(DataMapper.RopaDTOToRopa(toDelete));
@@ -119,7 +162,13 @@ public class RopaDAO implements CRUDOperation<RopaDTO, Ropa> {
 			return false;
 		}
 	}
-
+	/**
+     * Actualiza una prenda de ropa en la lista.
+     * 
+     * @param previous Objeto RopaDTO con los datos anteriores.
+     * @param newData Objeto RopaDTO con los nuevos datos.
+     * @return true si se actualizó correctamente, false si no se encontró.
+     */
 	@Override
 	public boolean update(RopaDTO previous, RopaDTO newData) {
 		Ropa found = find2(DataMapper.RopaDTOToRopa(previous));
@@ -133,7 +182,10 @@ public class RopaDAO implements CRUDOperation<RopaDTO, Ropa> {
 			return false;
 		}
 	}
-
+	/**
+	 * Escribe la lista de ropa en un archivo CSV.
+	 * Cada atributo de la ropa se separa por punto y coma (;).
+	 */
 	public void writeFile() {
 		String content = "";
 		for (Ropa m : listaRopa) {
@@ -152,7 +204,10 @@ public class RopaDAO implements CRUDOperation<RopaDTO, Ropa> {
 		}
 		FileHandler.writeFile(FILE_NAME, content);
 	}
-
+	/**
+	 * Lee la lista de ropa desde un archivo CSV y la almacena en la lista.
+	 * Si el archivo está vacío o no existe, se inicializa una lista vacía.
+	 */
 	public void readFile() {
 		String content = FileHandler.readFile(FILE_NAME);
 
@@ -178,11 +233,16 @@ public class RopaDAO implements CRUDOperation<RopaDTO, Ropa> {
 		}
 
 	}
-
+	/**
+	 * Serializa y guarda la lista de ropa en un archivo binario.
+	 */
 	public void writeSerialized() {
 		FileHandler.writerSerialized(SERIAL_NAME, listaRopa);
 	}
-
+	/**
+	 * Lee la lista de ropa desde un archivo serializado.
+	 * Si el archivo no existe, se inicializa una lista vacía.
+	 */
 	public void readSerizalized() {
 		Object content = FileHandler.readSerialized(SERIAL_NAME);
 		if (content == null) {
@@ -191,7 +251,12 @@ public class RopaDAO implements CRUDOperation<RopaDTO, Ropa> {
 			listaRopa = (ArrayList<Ropa>) content;
 		}
 	}
-
+	/**
+	 * Busca un objeto Ropa en la lista por su ID.
+	 * 
+	 * @param toFind Objeto Ropa con el ID a buscar.
+	 * @return El objeto Ropa encontrado, o null si no se encuentra.
+	 */
 	@Override
 	public Ropa find(Ropa toFind) {
 		Ropa found = null;
@@ -209,7 +274,12 @@ public class RopaDAO implements CRUDOperation<RopaDTO, Ropa> {
 		}
 		return null;
 	}
-
+	/**
+	 * Busca un objeto Ropa en la lista por su código.
+	 * 
+	 * @param toFind Objeto Ropa con el código a buscar.
+	 * @return El objeto Ropa encontrado, o null si no se encuentra.
+	 */
 	@Override
 	public Ropa find2(Ropa toFind) {
 		Ropa found = null;

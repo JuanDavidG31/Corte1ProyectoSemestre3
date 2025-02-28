@@ -16,23 +16,34 @@ import jakarta.inject.Named;
 
 @Named
 @ApplicationScoped
-
+/**
+ * Clase LacteoDAO que implementa las operaciones CRUD para la entidad Lacteo.
+ */
 public class LacteoDAO implements CRUDOperation<LacteoDTO, Lacteo> {
 
 	private ArrayList<Lacteo> listaLacteo;
 	private final String FILE_NAME = "lacteo.csv";
 	private final String SERIAL_NAME = "lacteo.dat";
-
+	/**
+     * Constructor de la clase LacteoDAO. Inicializa la lista de lácteos cargando los datos serializados.
+     */
 	public LacteoDAO() {
 		FileHandler.checkFolder();
 		readSerizalized();
 
 	}
-
+	/**
+     * Establece la lista de lácteos.
+     * @param listaLacteo Lista de objetos Lacteo.
+     */
 	public void setListaLacteo(ArrayList<Lacteo> listaLacteo) {
 		this.listaLacteo = listaLacteo;
 	}
-
+	/**
+     * Obtiene una lista de lácteos con un tamaño especificado.
+     * @param size Cantidad de elementos a obtener.
+     * @return Lista de objetos Lacteo.
+     */
 	public ArrayList<Lacteo> getListaLacteo(int size) {
 
 		if (size > listaLacteo.size()) {
@@ -52,7 +63,11 @@ public class LacteoDAO implements CRUDOperation<LacteoDTO, Lacteo> {
 		}
 
 	}
-
+	/**
+     * Obtiene una lista clonada de lácteos con códigos únicos.
+     * @param size Cantidad de elementos a obtener.
+     * @return Lista clonada de objetos Lacteo.
+     */
 	public ArrayList<Lacteo> getClonedLacteo(int size) {
 		ArrayList<Lacteo> results = new ArrayList<>();
 		ArrayList<Lacteo> originals = getListaLacteo(size);
@@ -66,7 +81,10 @@ public class LacteoDAO implements CRUDOperation<LacteoDTO, Lacteo> {
 
 		return results;
 	}
-
+	/**
+     * Elimina un elemento de la lista en una posición específica.
+     * @param positionToDelete Índice del elemento a eliminar.
+     */
 	@Override
 	public void delete(int positionToDelete) {
 		if (positionToDelete < 0 || positionToDelete >= listaLacteo.size()) {
@@ -77,7 +95,10 @@ public class LacteoDAO implements CRUDOperation<LacteoDTO, Lacteo> {
 		}
 
 	}
-
+	/**
+     * Muestra todos los elementos de la lista en formato de texto.
+     * @return Cadena con la representación de todos los elementos.
+     */
 	@Override
 	public String showAll() {
 		String rta = "";
@@ -90,13 +111,20 @@ public class LacteoDAO implements CRUDOperation<LacteoDTO, Lacteo> {
 			return rta;
 		}
 	}
-
+	 /**
+     * Obtiene todos los elementos de la lista en formato DTO.
+     * @return Lista de objetos LacteoDTO.
+     */
 	@Override
 	public ArrayList<LacteoDTO> getAll() {
 		return DataMapper.listaLacteoToListaLacteoDTO(listaLacteo);
 
 	}
-
+	/**
+     * Agrega un nuevo lácteo a la lista.
+     * @param newData Datos del nuevo lácteo.
+     * @return true si la operación fue exitosa.
+     */
 	@Override
 	public boolean add(LacteoDTO newData) {
 
@@ -106,7 +134,11 @@ public class LacteoDAO implements CRUDOperation<LacteoDTO, Lacteo> {
 		return true;
 
 	}
-
+	/**
+     * Elimina un lácteo específico de la lista.
+     * @param toDelete Objeto LacteoDTO a eliminar.
+     * @return true si el elemento fue eliminado exitosamente, false en caso contrario.
+     */
 	@Override
 	public boolean delete(LacteoDTO toDelete) {
 		Lacteo found = find2(DataMapper.LacteoDTOToLacteo(toDelete));
@@ -119,7 +151,13 @@ public class LacteoDAO implements CRUDOperation<LacteoDTO, Lacteo> {
 			return false;
 		}
 	}
-
+	/**
+	 * Actualiza un objeto Lacteo en la lista.
+	 * 
+	 * @param previous El objeto LacteoDTO que se desea actualizar.
+	 * @param newData  Los nuevos datos a actualizar.
+	 * @return true si se actualiza correctamente, false en caso contrario.
+	 */
 	@Override
 	public boolean update(LacteoDTO previous, LacteoDTO newData) {
 		Lacteo found = find2(DataMapper.LacteoDTOToLacteo(previous));
@@ -133,7 +171,9 @@ public class LacteoDAO implements CRUDOperation<LacteoDTO, Lacteo> {
 			return false;
 		}
 	}
-
+	/**
+	 * Escribe la lista de productos lácteos en un archivo CSV.
+	 */
 	public void writeFile() {
 		String content = "";
 		for (Lacteo m : listaLacteo) {
@@ -152,7 +192,9 @@ public class LacteoDAO implements CRUDOperation<LacteoDTO, Lacteo> {
 		}
 		FileHandler.writeFile(FILE_NAME, content);
 	}
-
+	/**
+	 * Lee los datos del archivo CSV y los carga en la lista de lácteos.
+	 */
 	public void readFile() {
 		String content = FileHandler.readFile(FILE_NAME);
 
@@ -178,11 +220,15 @@ public class LacteoDAO implements CRUDOperation<LacteoDTO, Lacteo> {
 		}
 
 	}
-
+	/**
+	 * Serializa y guarda la lista de lácteos en un archivo.
+	 */
 	public void writeSerialized() {
 		FileHandler.writerSerialized(SERIAL_NAME, listaLacteo);
 	}
-
+	/**
+	 * Lee los datos serializados y los carga en la lista de lácteos.
+	 */
 	public void readSerizalized() {
 		Object content = FileHandler.readSerialized(SERIAL_NAME);
 		if (content == null) {
@@ -191,7 +237,12 @@ public class LacteoDAO implements CRUDOperation<LacteoDTO, Lacteo> {
 			listaLacteo = (ArrayList<Lacteo>) content;
 		}
 	}
-
+	/**
+	 * Busca un objeto Lacteo en la lista por su ID.
+	 * 
+	 * @param toFind El objeto Lacteo que se desea encontrar.
+	 * @return El objeto encontrado o null si no se encuentra.
+	 */
 	@Override
 	public Lacteo find(Lacteo toFind) {
 		Lacteo found = null;
@@ -209,7 +260,12 @@ public class LacteoDAO implements CRUDOperation<LacteoDTO, Lacteo> {
 		}
 		return null;
 	}
-
+	/**
+	 * Busca un objeto Lacteo en la lista por su código.
+	 * 
+	 * @param toFind El objeto Lacteo que se desea encontrar.
+	 * @return El objeto encontrado o null si no se encuentra.
+	 */
 	@Override
 	public Lacteo find2(Lacteo toFind) {
 		Lacteo found = null;
